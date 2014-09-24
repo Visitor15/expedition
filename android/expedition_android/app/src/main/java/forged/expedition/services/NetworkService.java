@@ -1,8 +1,9 @@
 package forged.expedition.services;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.*;
+import android.os.Bundle;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.os.Process;
 
 /**
@@ -55,6 +56,10 @@ public class NetworkService extends BasicService {
     }
 
     private void handleSendRequest(final Bundle bundle) {
+        System.out.println("GOT HANDLE REQUEST COMMAND");
+    }
+
+    public void sendRequest() {
 
     }
 }

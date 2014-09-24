@@ -38,6 +38,7 @@ public abstract class BasicService extends Service {
         // Get the HandlerThread's Looper and use it for our Handler
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
+        mMessenger = new Messenger(mServiceHandler);
     }
 
     @Override

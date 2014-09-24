@@ -1,14 +1,18 @@
 package forged.expedition;
 
-import forged.expedition.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import forged.expedition.networking.NetworkServiceConnection;
+import forged.expedition.services.NetworkService;
+import forged.expedition.util.SystemUiHider;
 
 
 /**
@@ -45,6 +49,10 @@ public class MainActivity extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+
+    private NetworkServiceConnection mNetworkServiceConnection;
+
+    private boolean mServiceActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +123,33 @@ public class MainActivity extends Activity {
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
+    /**
+     * Called after {@link #onCreate} &mdash; or after {@link #onRestart} when
+     * the activity had been stopped, but is now again being displayed to the
+     * user.  It will be followed by {@link #onResume}.
+     * <p/>
+     * <p><em>Derived classes must call through to the super class's
+     * implementation of this method.  If they do not, an exception will be
+     * thrown.</em></p>
+     *
+     * @see #onCreate
+     * @see #onStop
+     * @see #onResume
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(mNetworkServiceConnection == null) {
+            mNetworkServiceConnection = new NetworkServiceConnection(MainActivity.this);
+        }
+
+        boolean success = this.bindService(new Intent(MainActivity.this,
+                NetworkService.class),
+                mNetworkServiceConnection,
+                Context.BIND_AUTO_CREATE);
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -123,6 +158,10 @@ public class MainActivity extends Activity {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100);
+    }
+
+    public void serviceConnected() {
+        mNetworkServiceConnection.sendRequest();
     }
 
 
