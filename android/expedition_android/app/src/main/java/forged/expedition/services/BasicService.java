@@ -16,11 +16,15 @@ public abstract class BasicService extends Service {
 
     ServiceHandler mServiceHandler;
 
+    ServiceWorkerHandler mServiceWorkerHandler;
+
     final IBinder mBinder = new ServiceBinder();
 
     public BasicService() {}
 
     protected abstract void onHandleMessage(final Message msg);
+
+    protected abstract void onHandleWorkerMessage(final Message msg);
 
     @Override
     public abstract void onDestroy();
@@ -75,6 +79,21 @@ public abstract class BasicService extends Service {
         public void handleMessage(Message msg) {
             synchronized (this) {
                 onHandleMessage(msg);
+            }
+        }
+    }
+
+    /*
+     * CLASS
+     */
+    protected class ServiceWorkerHandler extends Handler {
+
+        protected ServiceWorkerHandler(Looper looper) { super(looper); }
+
+        @Override
+        public void handleMessage(Message msg) {
+            synchronized (this) {
+                onHandleWorkerMessage(msg);
             }
         }
     }

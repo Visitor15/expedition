@@ -13,6 +13,8 @@ public class NetworkService extends BasicService {
 
     public static final int SEND_REQUEST = 0;
 
+    public static final int REQUEST_FINISHED = 100;
+
 
     public NetworkService() {
         super();
@@ -22,7 +24,20 @@ public class NetworkService extends BasicService {
     protected void onHandleMessage(Message msg) {
         switch (msg.what) {
             case SEND_REQUEST: {
-                handleSendRequest(msg.getData());
+                handleSendRequestAsync(msg.getData());
+                break;
+            }
+            default: {
+                return;
+            }
+        }
+    }
+
+    @Override
+    protected void onHandleWorkerMessage(Message msg) {
+        switch (msg.what) {
+            case REQUEST_FINISHED: {
+                System.out.println("REQUEST FINISHED");
                 break;
             }
             default: {
@@ -41,7 +56,7 @@ public class NetworkService extends BasicService {
         HandlerThread thread = new HandlerThread("NetworkServiceWorkerThread", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
 
-        mServiceLooper = thread.getLooper();
+        mServiceWorkerHandler = new ServiceWorkerHandler(thread.getLooper());
         return START_NOT_STICKY;
     }
 
@@ -57,6 +72,16 @@ public class NetworkService extends BasicService {
 
     private void handleSendRequest(final Bundle bundle) {
         System.out.println("GOT HANDLE REQUEST COMMAND");
+    }
+
+    private void handleSendRequestAsync(final Bundle bundle) {
+        HandlerThread thread = new HandlerThread("NetworkServiceWorkerThread", Process.THREAD_PRIORITY_BACKGROUND);
+        thread.start();
+
+        mServiceWorkerHandler = new ServiceWorkerHandler(thread.getLooper());
+
+        Message msg = Message.obtain(mServiceHandler, REQUEST_FINISHED);
+        mServiceWorkerHandler.sendMessage(msg);
     }
 
     public void sendRequest() {
