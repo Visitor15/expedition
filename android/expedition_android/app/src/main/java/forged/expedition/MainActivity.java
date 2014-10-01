@@ -2,16 +2,14 @@ package forged.expedition;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.networking.NetworkServiceConnection;
-import forged.expedition.services.NetworkService;
 import forged.expedition.util.SystemUiHider;
 
 
@@ -53,6 +51,8 @@ public class MainActivity extends Activity {
     private NetworkServiceConnection mNetworkServiceConnection;
 
     private boolean mServiceActive;
+
+    private KhanAcademyController khanController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,14 +140,20 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        if(mNetworkServiceConnection == null) {
-            mNetworkServiceConnection = new NetworkServiceConnection(MainActivity.this);
-        }
+        khanController = new KhanAcademyController();
 
-        boolean success = this.bindService(new Intent(MainActivity.this,
-                NetworkService.class),
-                mNetworkServiceConnection,
-                Context.BIND_AUTO_CREATE);
+//        List<Topic> topics = khanController.getAllTopics();
+
+//        System.out.println("SIZE: " + topics.size());
+
+//        if(mNetworkServiceConnection == null) {
+//            mNetworkServiceConnection = new NetworkServiceConnection(MainActivity.this);
+//        }
+//
+//        boolean success = this.bindService(new Intent(MainActivity.this,
+//                NetworkService.class),
+//                mNetworkServiceConnection,
+//                Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -161,7 +167,7 @@ public class MainActivity extends Activity {
     }
 
     public void serviceConnected() {
-        mNetworkServiceConnection.sendRequest();
+//        mNetworkServiceConnection.sendRequest();
     }
 
 

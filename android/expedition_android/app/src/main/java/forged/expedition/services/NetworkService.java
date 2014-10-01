@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.os.Process;
+import android.os.RemoteException;
 
 import forged.expedition.networking.http.HttpConnector;
 
@@ -50,6 +51,14 @@ public class NetworkService extends BasicService {
             }
             case REQUEST_FINISHED: {
                 System.out.println("REQUEST FINISHED");
+
+
+                try {
+                    Message message = Message.obtain(null, NetworkService.REQUEST_FINISHED);
+                    mClientHandlers.get(1).send(message);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             default: {

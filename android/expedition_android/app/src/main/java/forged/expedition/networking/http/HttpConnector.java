@@ -47,7 +47,6 @@ public class HttpConnector {
             reader.close();
 
             response = strResponse.toString();
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
