@@ -2,6 +2,7 @@ package forged.expedition;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -140,7 +141,7 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        khanController = new KhanAcademyController();
+//        khanController = new KhanAcademyController();
 
 //        List<Topic> topics = khanController.getAllTopics();
 
@@ -182,6 +183,10 @@ public class MainActivity extends Activity {
             if (AUTO_HIDE) {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
+
+            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
+            startActivity(intent);
+
             return false;
         }
     };
