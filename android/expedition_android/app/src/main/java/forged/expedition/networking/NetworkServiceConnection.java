@@ -11,6 +11,7 @@ import android.os.RemoteException;
 
 import forged.expedition.services.BasicService;
 import forged.expedition.services.NetworkService;
+import forged.expedition.util.GenericAsyncCallback;
 import forged.expedition.util.GenericCallback;
 
 /**
@@ -36,7 +37,13 @@ public class NetworkServiceConnection implements ServiceConnection {
 
     private Messenger mCallbackMessenger = new Messenger(new ServiceHandler());
 
-    private final GenericCallback mCallback;
+    private GenericCallback mCallback;
+
+    private GenericAsyncCallback asyncCallback;
+
+    public NetworkServiceConnection(GenericAsyncCallback callback) {
+        this.asyncCallback = callback;
+    }
 
     public NetworkServiceConnection(GenericCallback callback) {
         this.mCallback = callback;
@@ -135,6 +142,17 @@ public class NetworkServiceConnection implements ServiceConnection {
             synchronized (this) {
                 onHandleMessage(msg);
             }
+        }
+    }
+
+    /*
+     * CLASS
+     */
+    private class AsyncCallback extends GenericAsyncCallback {
+
+        @Override
+        public void onHandleAsyncCallback() {
+
         }
     }
 }

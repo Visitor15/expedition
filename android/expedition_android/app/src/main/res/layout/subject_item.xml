@@ -10,7 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/viewFlipper"
-        android:background="#66000000"/>
+        android:background="#66000000">
+
+
+
+        </ViewFlipper>
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/imageView_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_toRightOf="@+id/imageView_icon"
+            android:layout_marginLeft="8dp"
+            android:text="Large Text"
+            android:id="@+id/textView_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/textView_title"
+            android:layout_alignLeft="@+id/textView_title"
+            android:maxLines="3"
+            android:text="Small Text"
+            android:id="@+id/textView_description" />
 
     <Spinner
         android:layout_width="16dp"
