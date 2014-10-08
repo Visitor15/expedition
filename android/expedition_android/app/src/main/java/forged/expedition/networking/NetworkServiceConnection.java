@@ -17,7 +17,7 @@ import forged.expedition.util.GenericCallback;
 /**
  * Created by nchampagne on 9/23/14.
  */
-public class NetworkServiceConnection implements ServiceConnection {
+public class NetworkServiceConnection extends GenericAsyncCallback implements ServiceConnection {
 
     public static final int SERVICE_CONNECTED = 1;
 
@@ -35,11 +35,15 @@ public class NetworkServiceConnection implements ServiceConnection {
 
     private Messenger mMessenger;
 
-    private Messenger mCallbackMessenger = new Messenger(new ServiceHandler());
+    private Messenger mCallbackMessenger = new Messenger(new ConnectionServiceHandler());
 
     private GenericCallback mCallback;
 
     private GenericAsyncCallback asyncCallback;
+
+    public NetworkServiceConnection() {
+
+    }
 
     public NetworkServiceConnection(GenericAsyncCallback callback) {
         this.asyncCallback = callback;
@@ -55,8 +59,11 @@ public class NetworkServiceConnection implements ServiceConnection {
         mMessenger = new Messenger(iBinder);
         isBound = true;
 
-        registerConnection();
+//        registerConnection();
         callback(0, 0, Message.obtain(null, SERVICE_CONNECTED));
+        Bundle b = new Bundle();
+        b.putInt("callback_data", SERVICE_CONNECTED);
+        doCallback(b);
     }
 
     @Override
@@ -69,27 +76,52 @@ public class NetworkServiceConnection implements ServiceConnection {
         mCallback.onHandleGenericCallback(arg1, arg2, msg);
     }
 
-    private void registerConnection() {
-        try {
-            Message msg = Message.obtain(null, BasicService.MSG_REGISTER_CLIENT);
-            msg.replyTo = mCallbackMessenger;
-            mMessenger.send(msg);
-        } catch (RemoteException e) {
-            // In this case the service has crashed before we could even do anything with it
-        }
+    private void doCallback(Bundle b) {
+        mCallback.onHandleGenericCallback(b);
     }
+
+//    private void registerConnection() {
+//        try {
+//            Message msg = Message.obtain(null, BasicService.MSG_REGISTER_CLIENT);
+//            msg.replyTo = mCallbackMessenger;
+//            mMessenger.send(msg);
+//        } catch (RemoteException e) {
+//            // In this case the service has crashed before we could even do anything with it
+//        }
+//    }
 
     public void sendRequest(String url) {
         try {
             Bundle b = new Bundle();
             b.putString(NetworkService.REQUEST_DATA, url);
-            Message msg = Message.obtain(null, NetworkService.SEND_REQUEST);
+            Message msg = obtainNewMessage();
+            msg.what = NetworkService.SEND_REQUEST;
+//            Message msg = Message.obtain(new ConnectionServiceHandler(), NetworkService.SEND_REQUEST);
             msg.setData(b);
             mMessenger.send(msg);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
+
+    private Message obtainNewMessage() {
+        Message msg = new Message();
+        msg.replyTo = mCallbackMessenger;
+        return msg;
+    }
+
+
+//    public void sendRequest(String url, Runnable callback) {
+//        try {
+//            Bundle b = new Bundle();
+//            b.putString(NetworkService.REQUEST_DATA, url);
+//            Message msg = Message.obtain(null, NetworkService.SEND_REQUEST);
+//            msg.setData(b);
+//            mMessenger.send(msg);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void exitService() {
         try {
@@ -110,7 +142,8 @@ public class NetworkServiceConnection implements ServiceConnection {
     private void onHandleMessage(Message msg) {
         switch(msg.what) {
             case REQUEST_SUCCESS: {
-                callback(0, 0, Message.obtain(null, REQUEST_SUCCESS));
+                doCallback(msg.getData());
+//                callback(0, 0, Message.obtain(null, REQUEST_SUCCESS));
                 break;
             }
             case REQUEST_FAILURE: {
@@ -128,31 +161,23 @@ public class NetworkServiceConnection implements ServiceConnection {
         }
     }
 
-    /*
-     * CLASS
-     */
-    protected class ServiceHandler extends Handler {
-
-        protected ServiceHandler() {
-
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            synchronized (this) {
-                onHandleMessage(msg);
-            }
-        }
+    @Override
+    public void onHandleAsyncCallback(Bundle b) {
+        doCallback(b);
     }
 
     /*
      * CLASS
      */
-    private class AsyncCallback extends GenericAsyncCallback {
+    protected class ConnectionServiceHandler extends Handler {
+
+        protected ConnectionServiceHandler() {}
 
         @Override
-        public void onHandleAsyncCallback() {
-
+        public void handleMessage(Message msg) {
+//            synchronized (this) {
+                onHandleMessage(msg);
+//            }
         }
     }
 }

@@ -21,7 +21,7 @@ public class HttpConnector {
 
     public HttpConnector() {}
 
-    public String postForReponse(String url) {
+    public String postForResponse(String url) {
         String response = "";
         try {
             mUrl = new URL(url);
@@ -59,6 +59,8 @@ public class HttpConnector {
                 httpConnection.disconnect();
             }
         }
+
+        System.out.println(response);
 
         return response;
     }

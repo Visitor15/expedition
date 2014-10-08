@@ -141,7 +141,9 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-//        khanController = new KhanAcademyController();
+        khanController = new KhanAcademyController();
+
+//        List<MathTopic> mathTopics = khanController.getAllMathTopics();
 
 //        List<Topic> topics = khanController.getAllTopics();
 

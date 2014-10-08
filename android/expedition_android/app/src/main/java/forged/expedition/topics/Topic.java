@@ -7,5 +7,6 @@ import forged.expedition.data.JsonData;
  */
 public interface Topic<T> extends JsonData<T> {
 
+    public String getTopicId();
 
 }

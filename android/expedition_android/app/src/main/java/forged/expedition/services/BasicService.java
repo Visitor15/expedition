@@ -98,6 +98,14 @@ public abstract class BasicService extends Service {
         }
     }
 
+    protected void doCallback(Message msg) {
+        try {
+            msg.replyTo.send(Message.obtain(msg));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected Long generateId() {
         return new Random().nextLong();
     }

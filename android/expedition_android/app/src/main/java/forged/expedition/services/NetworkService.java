@@ -8,6 +8,7 @@ import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
 
+import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.networking.http.HttpConnector;
 
 /**
@@ -33,8 +34,7 @@ public class NetworkService extends BasicService {
     protected void onHandleMessage(Message msg) {
         switch (msg.what) {
             case SEND_REQUEST: {
-                Bundle b = msg.getData();
-                handleSendRequestAsync(b);
+                handleSendRequestAsync(Message.obtain(msg));
                 break;
             }
             default: {
@@ -45,26 +45,38 @@ public class NetworkService extends BasicService {
 
     @Override
     protected void onHandleWorkerMessage(Message msg) {
+        Bundle b = null;
         switch (msg.what) {
             case SEND_REQUEST: {
-                makeHttpRequest(msg.getData());
+                b = makeHttpRequestForBundle(msg.getData());
+
+                break;
             }
             case REQUEST_FINISHED: {
                 System.out.println("REQUEST FINISHED");
-
-
-                try {
-                    Message message = Message.obtain(null, NetworkService.REQUEST_FINISHED);
-                    mClientHandlers.get(1).send(message);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                Message message = Message.obtain(null, NetworkService.REQUEST_FINISHED);
+                msg.getTarget().sendMessage(message);
                 break;
             }
             default: {
                 return;
             }
         }
+
+        if(b == null) {
+            b = new Bundle();
+        }
+
+        msg.setData(b);
+        msg.what = NetworkServiceConnection.REQUEST_SUCCESS;
+        try {
+            msg.replyTo.send(Message.obtain(msg));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+//        msg.getTarget().sendMessage(Message.obtain(msg));
+//        doCallback(Message.obtain(msg));
     }
 
     @Override
@@ -90,27 +102,30 @@ public class NetworkService extends BasicService {
     }
 
     private void makeHttpRequest(Bundle b) {
-        String response = httpConnector.postForReponse(b.getString(REQUEST_DATA));
+        String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));
         System.out.println(response);
+    }
+
+    private Bundle makeHttpRequestForBundle(Bundle b) {
+        String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));
+        System.out.println(response);
+        b.putString(NetworkService.REQUEST_DATA, response);
+        return b;
     }
 
     private void handleSendRequest(final Bundle bundle) {
         System.out.println("GOT HANDLE REQUEST COMMAND");
     }
 
-    private void handleSendRequestAsync(final Bundle bundle) {
+    private void handleSendRequestAsync(final Message msg) {
         Handler mHandler = spawnWorkerThread();
-        Message msg = Message.obtain(mHandler, SEND_REQUEST);
-        msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
 
     private Handler spawnWorkerThread() {
         HandlerThread thread = new HandlerThread("NetworkServiceWorkerThread", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
-        ServiceWorkerHandler mServiceWorkerHandler = new ServiceWorkerHandler(thread.getLooper());
-//        mThreadsMap.put(thread, mServiceWorkerHandler);
-        return mServiceWorkerHandler;
+        return new ServiceWorkerHandler(thread.getLooper());
     }
 
     public void sendRequest() {

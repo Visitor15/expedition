@@ -1,5 +1,6 @@
 package forged.expedition.util;
 
+import android.os.Bundle;
 import android.os.Message;
 
 /**
@@ -8,4 +9,6 @@ import android.os.Message;
 public interface GenericCallback {
 
     public void onHandleGenericCallback(int arg1, int arg2, Message msg);
+
+    public void onHandleGenericCallback(Bundle b);
 }

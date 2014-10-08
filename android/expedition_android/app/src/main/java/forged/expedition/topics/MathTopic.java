@@ -27,4 +27,9 @@ public class MathTopic extends AbstractTopic<MathTopic> {
     public MathTopic fromJson(JsonData data) {
         return null;
     }
+
+    @Override
+    public String getTopicId() {
+        return "math";
+    }
 }
