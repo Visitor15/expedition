@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
+import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.util.SystemUiHider;
 
@@ -54,6 +55,8 @@ public class MainActivity extends Activity {
     private boolean mServiceActive;
 
     private KhanAcademyController khanController;
+
+    private RequestController requestController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +145,8 @@ public class MainActivity extends Activity {
         super.onStart();
 
         khanController = new KhanAcademyController();
+
+        requestController = new RequestController();
 
 //        List<MathTopic> mathTopics = khanController.getAllMathTopics();
 
