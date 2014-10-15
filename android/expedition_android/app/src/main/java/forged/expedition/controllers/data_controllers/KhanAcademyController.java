@@ -22,7 +22,7 @@ public class KhanAcademyController extends BaseController {
     private boolean isBound;
 
     public KhanAcademyController() {
-        networkServiceConnection = new NetworkServiceConnection(this);
+        networkServiceConnection = new NetworkServiceConnection(KhanAcademyController.this);
         initializeService(NetworkService.class, networkServiceConnection);
     }
 

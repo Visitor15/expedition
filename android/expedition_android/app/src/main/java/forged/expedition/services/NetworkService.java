@@ -75,6 +75,10 @@ public class NetworkService extends BasicService {
             e.printStackTrace();
         }
 
+        if(Thread.currentThread() instanceof HandlerThread) {
+            ((HandlerThread) Thread.currentThread()).quit();
+        }
+
 //        msg.getTarget().sendMessage(Message.obtain(msg));
 //        doCallback(Message.obtain(msg));
     }

@@ -15,13 +15,14 @@ import java.util.Locale;
  */
 public class HttpConnector {
 
-    private HttpURLConnection httpConnection;
+
 
     private URL mUrl;
 
     public HttpConnector() {}
 
     public String postForResponse(String url) {
+        HttpURLConnection httpConnection = null;
         String response = "";
         try {
             mUrl = new URL(url);
@@ -37,12 +38,31 @@ public class HttpConnector {
             InputStream inStream = httpConnection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
 
-            String line;
+            StringBuilder strBuilder = new StringBuilder();
+
+//            File f = new File("test_file.txt");
+//            if(!f.exists()) {
+//                f.createNewFile();
+//            }
+//
+//            FileOutputStream fileOut = new FileOutputStream(f);
+
             StringBuffer strResponse = new StringBuffer();
 
-            while((line = reader.readLine()) != null) {
-                strResponse.append(line);
+            char[] buf = new char[1024];
+            while(reader.read(buf) > 0) {
+//                Log.d("TAG", "GOT DATA: " + buf.toString());
+//                strBuilder.append
+                strResponse.append(buf);
+//                Log.d("TAG", "GOT DATA: " + buf.toString());
             }
+
+
+//            while(inStream.read(buf) > 0) {
+//                fileOut.write(buf);
+//            }
+//
+//            fileOut.flush();
 
             reader.close();
 

@@ -10,6 +10,7 @@ import forged.expedition.controllers.BaseController;
 import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.services.NetworkService;
 import forged.expedition.topics.MathTopic;
+import forged.expedition.topics.ScienceTopic;
 import forged.expedition.topics.Topic;
 
 /**
@@ -70,12 +71,21 @@ public class RequestController extends BaseController {
         return topicList;
     }
 
+    public List<ScienceTopic> getAllScienceTopics() {
+        List<ScienceTopic> topicList = new ArrayList<ScienceTopic>();
+
+        networkServiceConnection.sendRequest(KhanAcademy.getTopicUrl(new ScienceTopic()));
+
+
+        return topicList;
+    }
+
     @Override
     public void onHandleGenericCallback(Bundle b) {
         System.out.println("Got bundle: " + b);
         if(b.containsKey("callback_data")) {
             isBound = true;
-            List<MathTopic> mathTopics = getAllMathTopics();
+            List<ScienceTopic> mathTopics = getAllScienceTopics();
         }
 
         if(b.containsKey(NetworkService.REQUEST_DATA)) {
