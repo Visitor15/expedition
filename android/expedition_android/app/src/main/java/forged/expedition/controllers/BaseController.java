@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.Message;
 
 import forged.expedition.Expedition;
+import forged.expedition.services.BasicService;
 import forged.expedition.util.GenericCallback;
 
 /**
@@ -14,6 +15,8 @@ import forged.expedition.util.GenericCallback;
 public abstract class BaseController implements GenericCallback {
 
     private boolean isBound = false;
+
+    protected boolean isServiceConnected = false;
 
     public BaseController() {
 
@@ -32,7 +35,30 @@ public abstract class BaseController implements GenericCallback {
 //
 //    }
     @Override
-    public void onHandleGenericCallback(int arg1, int arg2, Message msg) {
+    public void onHandleGenericCallback(Message msg) {
+
+
+        switch(msg.what) {
+            case BasicService.SERVICE_CONNECTED: {
+                onServiceConnected();
+                break;
+            }
+            case BasicService.SERVICE_DISCONNECTED: {
+                onServiceDisconnected();
+                break;
+            }
+            case BasicService.SERVICE_REQUEST_ERROR: {
+                onServiceRequestError();
+                break;
+            }
+        }
+
 
     }
+
+    public abstract void onServiceConnected();
+
+    public abstract void onServiceDisconnected();
+
+    public abstract void onServiceRequestError();
 }

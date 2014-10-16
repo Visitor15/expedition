@@ -9,6 +9,8 @@ import android.os.Message;
  */
 public abstract class GenericAsyncCallback implements Runnable {
 
+    public static final String SERVICE_RESPONSE = "service_response";
+
     private Bundle b;
 
     private Handler mHandler = new Handler() {

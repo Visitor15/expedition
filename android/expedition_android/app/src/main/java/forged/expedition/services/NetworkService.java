@@ -22,6 +22,8 @@ public class NetworkService extends BasicService {
 
     public static final String REQUEST_DATA = "request_data";
 
+    public static final String REQUEST_ID = "request_id";
+
     private HttpConnector httpConnector;
 
 
@@ -105,10 +107,10 @@ public class NetworkService extends BasicService {
 
     }
 
-    private void makeHttpRequest(Bundle b) {
-        String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));
-        System.out.println(response);
-    }
+//    private void makeHttpRequest(Bundle b) {
+//        String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));
+//        System.out.println(response);
+//    }
 
     private Bundle makeHttpRequestForBundle(Bundle b) {
         String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));

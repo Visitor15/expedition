@@ -32,6 +32,12 @@ public abstract class BasicService extends Service {
 
     public static final String MESSENGER_ID = "messenger_id";
 
+    public static final int SERVICE_CONNECTED = 1;
+
+    public static final int SERVICE_DISCONNECTED = 2;
+
+    public static final int SERVICE_REQUEST_ERROR = 3;
+
     Looper mServiceLooper;
 
     Messenger mMessenger;

@@ -26,32 +26,20 @@ public class KhanAcademyController extends BaseController {
         initializeService(NetworkService.class, networkServiceConnection);
     }
 
-//    @Override
-//    public void onHandleAsyncCallback(int arg1, int arg2, Message msg) {
-//        switch(msg.what) {
-//            case NetworkServiceConnection.SERVICE_CONNECTED: {
-//                System.out.println("SERVICE_CONNECTED");
-//                isBound = true;
-//                getAllTopics();
-//                break;
-//            }
-//            case NetworkServiceConnection.SERVICE_DISCONNECTED: {
-//                System.out.println("SERVICE_DISCONNECTED");
-//                isBound = false;
-//                break;
-//            }
-//            case NetworkService.REQUEST_FINISHED: {
-//
-//                Bundle b = msg.getData();
-//                break;
-//            }
-//            default: {
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void onServiceConnected() {
+        // Automatically called from BaseController.
+    }
 
+    @Override
+    public void onServiceDisconnected() {
+        // Automatically called from BaseController.
+    }
 
+    @Override
+    public void onServiceRequestError() {
+
+    }
 
     public List<Topic> getAllTopics() {
         List<Topic> topicList = new ArrayList<Topic>();
@@ -64,7 +52,7 @@ public class KhanAcademyController extends BaseController {
     public List<MathTopic> getAllMathTopics() {
         List<MathTopic> topicList = new ArrayList<MathTopic>();
 
-        networkServiceConnection.sendRequest(KhanAcademy.getTopicUrl(new MathTopic()));
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), MathTopic.MATH_ID);
 
 
         return topicList;

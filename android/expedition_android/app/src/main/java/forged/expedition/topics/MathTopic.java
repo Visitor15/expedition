@@ -9,6 +9,8 @@ import forged.expedition.data.JsonData;
  */
 public class MathTopic extends AbstractTopic<MathTopic> {
 
+    public static final String MATH_ID = "math";
+
     public MathTopic() {
 
     }
@@ -30,6 +32,6 @@ public class MathTopic extends AbstractTopic<MathTopic> {
 
     @Override
     public String getTopicId() {
-        return "math";
+        return MATH_ID;
     }
 }

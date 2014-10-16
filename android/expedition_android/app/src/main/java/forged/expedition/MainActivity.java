@@ -144,7 +144,7 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        khanController = new KhanAcademyController();
+//        khanController = new KhanAcademyController();
 
         requestController = new RequestController();
 
