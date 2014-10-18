@@ -9,6 +9,8 @@ import forged.expedition.data.JsonData;
  */
 public class ScienceTopic extends AbstractTopic<ScienceTopic> {
 
+    public static final String SCIENCE_ID = "science";
+
     public ScienceTopic() {
 
     }

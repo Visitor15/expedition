@@ -196,7 +196,15 @@ public class MainActivity extends Activity {
                 @Override
                 public void handleCallback(Bundle b) {
                     String result = b.getString(NetworkService.RESPONSE_DATA);
-                    System.out.println("GOT RESULT:" + result);
+                    System.out.println("GOT MATH RESULT:" + result);
+                }
+            });
+
+            khanController.getAllScienceTopics(new ControllerCallback() {
+                @Override
+                public void handleCallback(Bundle b) {
+                    String result = b.getString(NetworkService.RESPONSE_DATA);
+                    System.out.println("GOT SCIENCE RESULT:" + result);
                 }
             });
 

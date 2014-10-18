@@ -9,10 +9,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-import java.util.Random;
-
 import forged.expedition.controllers.ControllerCallback;
-import forged.expedition.services.BasicService;
 import forged.expedition.services.NetworkService;
 import forged.expedition.util.GenericAsyncCallback;
 import forged.expedition.util.GenericCallback;
@@ -41,8 +38,6 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
     private Messenger mCallbackMessenger = new Messenger(new ConnectionServiceHandler());
 
     private GenericCallback mCallback;
-
-//    private GenericAsyncCallback asyncCallback;
 
     public NetworkServiceConnection() {}
 
@@ -74,53 +69,6 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
 
     private void doCallback(Bundle b) {
         mCallback.onHandleGenericCallback(b);
-    }
-
-    public void sendRequest(String url) {
-        try {
-            Bundle b = new Bundle();
-            b.putString(NetworkService.REQUEST_DATA, url);
-            Message msg = obtainNewRequestMessage();
-            msg.what = NetworkService.SEND_REQUEST;
-//            Message msg = Message.obtain(new ConnectionServiceHandler(), NetworkService.SEND_REQUEST);
-            msg.setData(b);
-            mMessenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendRequestForResponse(String url, int id) {
-        try {
-            Bundle b = new Bundle();
-            b.putString(NetworkService.REQUEST_DATA, url);
-            b.putInt(NetworkService.REQUEST_ID, id);
-            Message msg = obtainNewRequestMessage();
-            msg.what = NetworkService.SEND_REQUEST;
-            msg.setData(b);
-            mMessenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public long sendRequestForResponse(String url) {
-        try {
-            long id = new Random().nextLong();
-            Bundle b = new Bundle();
-            b.putString(NetworkService.REQUEST_DATA, url);
-            b.putLong(NetworkService.REQUEST_ID, id);
-            Message msg = obtainNewRequestMessage();
-            msg.what = NetworkService.SEND_REQUEST;
-            msg.setData(b);
-            mMessenger.send(msg);
-
-            return id;
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        throw new RuntimeException("Error creating request.");
     }
 
     public void sendRequestForResponse(String url, ControllerCallback callback) {
@@ -155,16 +103,12 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
         switch(msg.what) {
             case REQUEST_SUCCESS: {
                 doCallback(msg.getData());
-//                callback(0, 0, Message.obtain(null, REQUEST_SUCCESS));
                 break;
             }
             case REQUEST_FAILURE: {
                 break;
             }
             case REQUEST_ERROR: {
-                break;
-            }
-            case BasicService.MSG_REGISTRATION_SUCCESSFUL: {
                 break;
             }
             default: {

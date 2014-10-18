@@ -2,16 +2,9 @@ package forged.expedition.controllers.data_controllers;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import forged.expedition.KhanAcademy;
 import forged.expedition.controllers.BaseController;
 import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.services.NetworkService;
-import forged.expedition.topics.MathTopic;
-import forged.expedition.topics.ScienceTopic;
-import forged.expedition.topics.Topic;
 
 /**
  * Created by visitor15 on 9/30/14.
@@ -47,38 +40,38 @@ public class RequestController extends BaseController {
 
     }
 
-    public List<Topic> getAllTopics() {
-        List<Topic> topicList = new ArrayList<Topic>();
-
-        networkServiceConnection.sendRequest(KhanAcademy.TOPIC_TREE_URL);
-
-        return topicList;
-    }
-
-    public List<MathTopic> getAllMathTopics() {
-        List<MathTopic> topicList = new ArrayList<MathTopic>();
-
-        networkServiceConnection.sendRequest(KhanAcademy.TOPIC_TREE_URL);
-
-
-        return topicList;
-    }
-
-    public List<ScienceTopic> getAllScienceTopics() {
-        List<ScienceTopic> topicList = new ArrayList<ScienceTopic>();
-
-        networkServiceConnection.sendRequest(KhanAcademy.getTopicUrl(new ScienceTopic()));
-
-
-        return topicList;
-    }
+//    public List<Topic> getAllTopics() {
+//        List<Topic> topicList = new ArrayList<Topic>();
+//
+//        networkServiceConnection.sendRequest(KhanAcademy.TOPIC_TREE_URL);
+//
+//        return topicList;
+//    }
+//
+//    public List<MathTopic> getAllMathTopics() {
+//        List<MathTopic> topicList = new ArrayList<MathTopic>();
+//
+//        networkServiceConnection.sendRequest(KhanAcademy.TOPIC_TREE_URL);
+//
+//
+//        return topicList;
+//    }
+//
+//    public List<ScienceTopic> getAllScienceTopics() {
+//        List<ScienceTopic> topicList = new ArrayList<ScienceTopic>();
+//
+//        networkServiceConnection.sendRequest(KhanAcademy.getTopicUrl(new ScienceTopic()));
+//
+//
+//        return topicList;
+//    }
 
     @Override
     public void onHandleGenericCallback(Bundle b) {
         System.out.println("Got bundle: " + b);
         if(b.containsKey("callback_data")) {
             isBound = true;
-            List<ScienceTopic> mathTopics = getAllScienceTopics();
+//            List<ScienceTopic> mathTopics = getAllScienceTopics();
         }
 
         if(b.containsKey(NetworkService.REQUEST_DATA)) {
