@@ -9,6 +9,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
+import java.util.Random;
+
+import forged.expedition.controllers.ControllerCallback;
 import forged.expedition.services.BasicService;
 import forged.expedition.services.NetworkService;
 import forged.expedition.util.GenericAsyncCallback;
@@ -87,17 +90,50 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
         }
     }
 
-    public void sendRequestForResponse(String url, String id) {
+    public void sendRequestForResponse(String url, int id) {
         try {
             Bundle b = new Bundle();
             b.putString(NetworkService.REQUEST_DATA, url);
-            b.putString(NetworkService.REQUEST_ID, id);
+            b.putInt(NetworkService.REQUEST_ID, id);
             Message msg = obtainNewRequestMessage();
             msg.what = NetworkService.SEND_REQUEST;
             msg.setData(b);
             mMessenger.send(msg);
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    public long sendRequestForResponse(String url) {
+        try {
+            long id = new Random().nextLong();
+            Bundle b = new Bundle();
+            b.putString(NetworkService.REQUEST_DATA, url);
+            b.putLong(NetworkService.REQUEST_ID, id);
+            Message msg = obtainNewRequestMessage();
+            msg.what = NetworkService.SEND_REQUEST;
+            msg.setData(b);
+            mMessenger.send(msg);
+
+            return id;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        throw new RuntimeException("Error creating request.");
+    }
+
+    public void sendRequestForResponse(String url, ControllerCallback callback) {
+        try {
+            Bundle b = new Bundle();
+            b.putSerializable("callback", callback);
+            b.putString(NetworkService.REQUEST_DATA, url);
+            Message msg = obtainNewRequestMessage();
+            msg.what = NetworkService.SEND_REQUEST;
+            msg.setData(b);
+            mMessenger.send(msg);
+        } catch (RemoteException e) {
+            throw new RuntimeException("Error creating request.", e);
         }
     }
 
@@ -151,9 +187,9 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
 
         @Override
         public void handleMessage(Message msg) {
-//            synchronized (this) {
+            synchronized (this) {
                 onHandleMessage(msg);
-//            }
+            }
         }
     }
 }

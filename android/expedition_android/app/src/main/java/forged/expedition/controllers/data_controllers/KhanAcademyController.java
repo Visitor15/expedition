@@ -7,6 +7,7 @@ import java.util.List;
 
 import forged.expedition.KhanAcademy;
 import forged.expedition.controllers.BaseController;
+import forged.expedition.controllers.ControllerCallback;
 import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.services.NetworkService;
 import forged.expedition.topics.MathTopic;
@@ -38,7 +39,12 @@ public class KhanAcademyController extends BaseController {
 
     @Override
     public void onServiceRequestError() {
+        // Automatically called from BaseController.
+    }
 
+    @Override
+    public void onDeliverResults() {
+//        onReceiveResults();
     }
 
     public List<Topic> getAllTopics() {
@@ -52,23 +58,32 @@ public class KhanAcademyController extends BaseController {
     public List<MathTopic> getAllMathTopics() {
         List<MathTopic> topicList = new ArrayList<MathTopic>();
 
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), MathTopic.MATH_ID);
+//        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), KhanAcademy.TopicIdentifier.MATH);
 
+//        long id = networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID));
 
         return topicList;
     }
 
+    public void getAllMathTopics(ControllerCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), callback);
+    }
+
     @Override
     public void onHandleGenericCallback(Bundle b) {
-        System.out.println("Got bundle: " + b);
-        if(b.containsKey("callback_data")) {
-            isBound = true;
-            List<MathTopic> mathTopics = getAllMathTopics();
-        }
 
-        if(b.containsKey(NetworkService.REQUEST_DATA)) {
-            String response = b.getString(NetworkService.REQUEST_DATA);
-            System.out.println("GOT RESPONSE: " + response);
-        }
+
+        ((ControllerCallback) b.getSerializable("callback")).handleCallback(b);
+
+//        System.out.println("Got bundle: " + b);
+//        if(b.containsKey("callback_data")) {
+//            isBound = true;
+//            List<MathTopic> mathTopics = getAllMathTopics();
+//        }
+//
+//        if(b.containsKey(NetworkService.REQUEST_DATA)) {
+//            String response = b.getString(NetworkService.REQUEST_DATA);
+//            System.out.println("GOT RESPONSE: " + response);
+//        }
     }
 }

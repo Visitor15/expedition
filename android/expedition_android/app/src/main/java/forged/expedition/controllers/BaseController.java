@@ -51,6 +51,9 @@ public abstract class BaseController implements GenericCallback {
                 onServiceRequestError();
                 break;
             }
+            case BasicService.DELIVER_RESULTS: {
+                onDeliverResults();
+            }
         }
 
 
@@ -61,4 +64,6 @@ public abstract class BaseController implements GenericCallback {
     public abstract void onServiceDisconnected();
 
     public abstract void onServiceRequestError();
+
+    public abstract void onDeliverResults();
 }

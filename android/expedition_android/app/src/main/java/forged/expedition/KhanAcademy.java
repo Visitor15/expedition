@@ -7,6 +7,10 @@ import forged.expedition.topics.Topic;
  */
 public class KhanAcademy {
 
+    public static enum TopicIdentifier {
+        MATH
+    }
+
     public static final String BASE_URL = "https://www.khanacademy.org";
 
     public static final String TOPIC_TREE_URL = BASE_URL.concat("/api/v1/topictree");

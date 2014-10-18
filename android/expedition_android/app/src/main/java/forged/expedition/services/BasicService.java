@@ -38,6 +38,8 @@ public abstract class BasicService extends Service {
 
     public static final int SERVICE_REQUEST_ERROR = 3;
 
+    public static final int DELIVER_RESULTS = 4;
+
     Looper mServiceLooper;
 
     Messenger mMessenger;
@@ -144,14 +146,6 @@ public abstract class BasicService extends Service {
         @Override
         public void handleMessage(Message msg) {
             synchronized (this) {
-                switch(msg.what) {
-                    case MSG_REGISTER_CLIENT: {
-                        registerClient(msg);
-                    }
-                    case MSG_UNREGISTER_CLIENT: {
-                        unregisterClient(msg);
-                    }
-                }
                 onHandleMessage(msg);
             }
         }

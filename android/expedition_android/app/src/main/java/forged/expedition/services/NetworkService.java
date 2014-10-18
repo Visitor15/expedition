@@ -24,6 +24,8 @@ public class NetworkService extends BasicService {
 
     public static final String REQUEST_ID = "request_id";
 
+    public static final String RESPONSE_DATA = "response_data";
+
     private HttpConnector httpConnector;
 
 
@@ -47,11 +49,10 @@ public class NetworkService extends BasicService {
 
     @Override
     protected void onHandleWorkerMessage(Message msg) {
-        Bundle b = null;
+//        Bundle b = null;
         switch (msg.what) {
             case SEND_REQUEST: {
-                b = makeHttpRequestForBundle(msg.getData());
-
+                msg.getData().putString(NetworkService.RESPONSE_DATA, sendRequestForStringResponse(msg.getData()));
                 break;
             }
             case REQUEST_FINISHED: {
@@ -65,11 +66,11 @@ public class NetworkService extends BasicService {
             }
         }
 
-        if(b == null) {
-            b = new Bundle();
-        }
-
-        msg.setData(b);
+//        if(b == null) {
+//            b = new Bundle();
+//        }
+//
+//        msg.setData(b);
         msg.what = NetworkServiceConnection.REQUEST_SUCCESS;
         try {
             msg.replyTo.send(Message.obtain(msg));
@@ -80,9 +81,6 @@ public class NetworkService extends BasicService {
         if(Thread.currentThread() instanceof HandlerThread) {
             ((HandlerThread) Thread.currentThread()).quit();
         }
-
-//        msg.getTarget().sendMessage(Message.obtain(msg));
-//        doCallback(Message.obtain(msg));
     }
 
     @Override
@@ -115,8 +113,12 @@ public class NetworkService extends BasicService {
     private Bundle makeHttpRequestForBundle(Bundle b) {
         String response = httpConnector.postForResponse(b.getString(REQUEST_DATA));
         System.out.println(response);
-        b.putString(NetworkService.REQUEST_DATA, response);
+        b.putString(NetworkService.RESPONSE_DATA, response);
         return b;
+    }
+
+    private String sendRequestForStringResponse(Bundle b) {
+        return httpConnector.postForResponse(b.getString(REQUEST_DATA));
     }
 
     private void handleSendRequest(final Bundle bundle) {

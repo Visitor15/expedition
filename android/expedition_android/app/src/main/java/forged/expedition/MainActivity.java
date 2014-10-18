@@ -2,16 +2,17 @@ package forged.expedition;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import forged.expedition.controllers.ControllerCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
+import forged.expedition.services.NetworkService;
 import forged.expedition.util.SystemUiHider;
 
 
@@ -125,6 +126,9 @@ public class MainActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        khanController = new KhanAcademyController();
+        requestController = new RequestController();
     }
 
     /**
@@ -144,9 +148,6 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-//        khanController = new KhanAcademyController();
-
-        requestController = new RequestController();
 
 //        List<MathTopic> mathTopics = khanController.getAllMathTopics();
 
@@ -191,8 +192,16 @@ public class MainActivity extends Activity {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
 
-            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
-            startActivity(intent);
+            khanController.getAllMathTopics(new ControllerCallback() {
+                @Override
+                public void handleCallback(Bundle b) {
+                    String result = b.getString(NetworkService.RESPONSE_DATA);
+                    System.out.println("GOT RESULT:" + result);
+                }
+            });
+
+//            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
+//            startActivity(intent);
 
             return false;
         }
