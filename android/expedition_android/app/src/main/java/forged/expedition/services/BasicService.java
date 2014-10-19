@@ -3,7 +3,6 @@ package forged.expedition.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -12,12 +11,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.Process;
 import android.os.RemoteException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by nchampagne on 9/23/14.
@@ -45,16 +38,6 @@ public abstract class BasicService extends Service {
     Messenger mMessenger;
 
     ServiceHandler mServiceHandler;
-
-    ServiceWorkerHandler mServiceWorkerHandler;
-
-    List<Messenger> mClients = new ArrayList<Messenger>();
-
-    List<HandlerThread> mThreads = new ArrayList<HandlerThread>();
-
-    Map<Long, Messenger> mClientHandlers = new HashMap<Long, Messenger>();
-
-    final IBinder mBinder = new ServiceBinder();
 
     public BasicService() {}
 
@@ -90,36 +73,12 @@ public abstract class BasicService extends Service {
     @Override
     public abstract void onRebind(Intent intent);
 
-    private void registerClient(Message msg) {
-
-        mClients.add(msg.replyTo);
-
-        Bundle b = new Bundle();
-        b.putLong("test", 1);
-
-        mClientHandlers.put(new Long(1), msg.replyTo);
-
-        try {
-            msg.replyTo.send(Message.obtain(null, MSG_REGISTRATION_SUCCESSFUL));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void doCallback(Message msg) {
         try {
             msg.replyTo.send(Message.obtain(msg));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    }
-
-    protected Long generateId() {
-        return new Random().nextLong();
-    }
-
-    private void unregisterClient(Message msg) {
-        mClients.remove(msg.replyTo);
     }
 
     /*
