@@ -22,6 +22,6 @@ public class KhanAcademy {
     }
 
     public static String getTopicUrl(String topicId) {
-        return SPECIFIC_TOPIC_URL.concat("/").concat(topicId);
+        return SPECIFIC_TOPIC_URL.concat("/").concat(topicId).concat("?");
     }
 }

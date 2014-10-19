@@ -40,6 +40,11 @@ public class HttpConnector {
 
             StringBuilder strBuilder = new StringBuilder();
 
+            String s = "";
+            while((s = reader.readLine()) =! null) {
+
+            }
+
 //            File f = new File("test_file.txt");
 //            if(!f.exists()) {
 //                f.createNewFile();

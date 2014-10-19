@@ -49,7 +49,6 @@ public class NetworkService extends BasicService {
 
     @Override
     protected void onHandleWorkerMessage(Message msg) {
-//        Bundle b = null;
         switch (msg.what) {
             case SEND_REQUEST: {
                 msg.getData().putString(NetworkService.RESPONSE_DATA, sendRequestForStringResponse(msg.getData()));
@@ -66,11 +65,6 @@ public class NetworkService extends BasicService {
             }
         }
 
-//        if(b == null) {
-//            b = new Bundle();
-//        }
-//
-//        msg.setData(b);
         msg.what = NetworkServiceConnection.REQUEST_SUCCESS;
         try {
             msg.replyTo.send(Message.obtain(msg));
