@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -65,6 +67,15 @@ public class KhanAcademyController extends BaseController {
         });
     }
 
+    public void getPlaylists(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), MathTopic.class));
+            }
+        });
+    }
+
     public void getAllScienceTopics(ControllerCallback callback) {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ScienceTopic.SCIENCE_ID), callback);
     }
@@ -72,11 +83,33 @@ public class KhanAcademyController extends BaseController {
     public Topic convertJsonToTopic(String jsonStr, Class clazz) {
         Gson gson = new GsonBuilder().create();
 
-        String s = jsonStr.substring(jsonStr.indexOf("children"));
+        try {
+            JSONObject obj = new JSONObject(jsonStr);
 
-        JsonElement jsonElement = new JsonParser().parse(s);
 
-        return (Topic) gson.fromJson(jsonElement.getAsJsonObject().get("children").getAsString(), new TypeToken<List<MathTopic>>(){}.getType());
+            JSONArray testArray = obj.getJSONArray("children");
+
+            List<MathTopic> topicList = gson.fromJson(testArray.toString(), new TypeToken<List<MathTopic>>() {
+            }.getType());
+
+            System.out.println("TOPIC SIZE: " + topicList.size());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+//        JsonParser parser = new JsonParser();
+//        JsonArray jArray = parser.parse(jsonStr).getAsJsonArray();
+//
+//        List<MathTopic> mathTopics = new ArrayList<MathTopic>();
+//
+//        for(JsonElement obj : jArray )
+//        {
+//            mathTopics.add(gson.fromJson(obj, MathTopic.class));
+//        }
+
+//        return (Topic) gson.fromJson(jsonStr, new TypeToken<List<MathTopic>>(){}.getType());
+        return null;
     }
 
     @Override

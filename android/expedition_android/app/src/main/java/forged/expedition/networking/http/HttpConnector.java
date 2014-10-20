@@ -38,36 +38,14 @@ public class HttpConnector {
             InputStream inStream = httpConnection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
 
-            StringBuilder strBuilder = new StringBuilder();
-
-            String s = "";
-            while((s = reader.readLine()) =! null) {
-
-            }
-
-//            File f = new File("test_file.txt");
-//            if(!f.exists()) {
-//                f.createNewFile();
-//            }
-//
-//            FileOutputStream fileOut = new FileOutputStream(f);
-
+            String line;
             StringBuffer strResponse = new StringBuffer();
 
-            char[] buf = new char[1024];
-            while(reader.read(buf) > 0) {
-//                Log.d("TAG", "GOT DATA: " + buf.toString());
-//                strBuilder.append
-                strResponse.append(buf);
-//                Log.d("TAG", "GOT DATA: " + buf.toString());
+            while((line = reader.readLine()) != null) {
+                strResponse.append(line);
             }
 
-
-//            while(inStream.read(buf) > 0) {
-//                fileOut.write(buf);
-//            }
-//
-//            fileOut.flush();
+            response = strResponse.toString();
 
             reader.close();
 

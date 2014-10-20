@@ -8,12 +8,10 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
-import forged.expedition.controllers.ControllerCallback;
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
-import forged.expedition.services.NetworkService;
 import forged.expedition.topics.MathTopic;
 import forged.expedition.util.SystemUiHider;
 
@@ -194,6 +192,14 @@ public class MainActivity extends Activity {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
 
+//            khanController.getPlaylists(new DataCallback<MathTopic>() {
+//
+//                @Override
+//                public void receiveResults(MathTopic results) {
+//                    System.out.println("GOT PLAYLIST RESULT:" + results);
+//                }
+//            });
+
             khanController.getAllMathTopics(new DataCallback<MathTopic>() {
 
                 @Override
@@ -202,22 +208,22 @@ public class MainActivity extends Activity {
                 }
             });
 
-            khanController.getAllMathTopics(new ControllerCallback() {
-                @Override
-                public void handleCallback(Bundle b) {
-                    String result = b.getString(NetworkService.RESPONSE_DATA);
-                    System.out.println("GOT MATH RESULT:" + result);
-
-                }
-            });
-
-            khanController.getAllScienceTopics(new ControllerCallback() {
-                @Override
-                public void handleCallback(Bundle b) {
-                    String result = b.getString(NetworkService.RESPONSE_DATA);
-                    System.out.println("GOT SCIENCE RESULT:" + result);
-                }
-            });
+//            khanController.getAllMathTopics(new ControllerCallback() {
+//                @Override
+//                public void handleCallback(Bundle b) {
+//                    String result = b.getString(NetworkService.RESPONSE_DATA);
+//                    System.out.println("GOT MATH RESULT:" + result);
+//
+//                }
+//            });
+//
+//            khanController.getAllScienceTopics(new ControllerCallback() {
+//                @Override
+//                public void handleCallback(Bundle b) {
+//                    String result = b.getString(NetworkService.RESPONSE_DATA);
+//                    System.out.println("GOT SCIENCE RESULT:" + result);
+//                }
+//            });
 
 //            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
 //            startActivity(intent);
