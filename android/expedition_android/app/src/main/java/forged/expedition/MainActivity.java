@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.List;
+
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
@@ -203,7 +205,7 @@ public class MainActivity extends Activity {
             khanController.getAllMathTopics(new DataCallback<MathTopic>() {
 
                 @Override
-                public void receiveResults(MathTopic results) {
+                public void receiveResults(List<MathTopic> results) {
                     System.out.println("GOT MATH RESULT:" + results);
                 }
             });

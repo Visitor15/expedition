@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import forged.expedition.KhanAcademy;
@@ -62,7 +64,8 @@ public class KhanAcademyController extends BaseController {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), MathTopic.class));
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<MathTopic>>() {
+                }.getType()));
             }
         });
     }
@@ -71,7 +74,8 @@ public class KhanAcademyController extends BaseController {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), MathTopic.class));
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<MathTopic>>() {
+                }.getType()));
             }
         });
     }
@@ -80,36 +84,19 @@ public class KhanAcademyController extends BaseController {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ScienceTopic.SCIENCE_ID), callback);
     }
 
-    public Topic convertJsonToTopic(String jsonStr, Class clazz) {
-        Gson gson = new GsonBuilder().create();
+    public List<Topic> convertJsonToTopic(String jsonStr, Type type) {
 
         try {
+            Gson gson = new GsonBuilder().create();
             JSONObject obj = new JSONObject(jsonStr);
-
 
             JSONArray testArray = obj.getJSONArray("children");
 
-            List<MathTopic> topicList = gson.fromJson(testArray.toString(), new TypeToken<List<MathTopic>>() {
-            }.getType());
-
-            System.out.println("TOPIC SIZE: " + topicList.size());
+            return gson.fromJson(testArray.toString(), type);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-//        JsonParser parser = new JsonParser();
-//        JsonArray jArray = parser.parse(jsonStr).getAsJsonArray();
-//
-//        List<MathTopic> mathTopics = new ArrayList<MathTopic>();
-//
-//        for(JsonElement obj : jArray )
-//        {
-//            mathTopics.add(gson.fromJson(obj, MathTopic.class));
-//        }
-
-//        return (Topic) gson.fromJson(jsonStr, new TypeToken<List<MathTopic>>(){}.getType());
-        return null;
+        return new ArrayList<Topic>();
     }
 
     @Override
