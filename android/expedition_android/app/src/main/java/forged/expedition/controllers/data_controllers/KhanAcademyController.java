@@ -20,8 +20,13 @@ import forged.expedition.controllers.ControllerCallback;
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.networking.NetworkServiceConnection;
 import forged.expedition.services.NetworkService;
+import forged.expedition.topics.ArtsAndHumanitiesTopic;
+import forged.expedition.topics.ComputingTopic;
+import forged.expedition.topics.EconomicsAndFinanceTopic;
 import forged.expedition.topics.MathTopic;
+import forged.expedition.topics.PartnerContentTopic;
 import forged.expedition.topics.ScienceTopic;
+import forged.expedition.topics.TestPrepTopic;
 import forged.expedition.topics.Topic;
 
 /**
@@ -80,8 +85,64 @@ public class KhanAcademyController extends BaseController {
         });
     }
 
-    public void getAllScienceTopics(ControllerCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ScienceTopic.SCIENCE_ID), callback);
+    public void getAllScienceTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ScienceTopic.SCIENCE_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ScienceTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllEconomicsAndFinanceTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(EconomicsAndFinanceTopic.ECONOMICS_AND_FINANCE_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<EconomicsAndFinanceTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllArtsAndHumanitiesTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ArtsAndHumanitiesTopic.ARTS_AND_HUMANITIES_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ArtsAndHumanitiesTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllComputingTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ComputingTopic.COMPUTING_TOPIC_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ComputingTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllTestPrepTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(TestPrepTopic.TEST_PREP_TOPIC_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<TestPrepTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllPartnerContentTopics(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(PartnerContentTopic.PARTNER_CONTENT_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<PartnerContentTopic>>() {
+                }.getType()));
+            }
+        });
     }
 
     public List<Topic> convertJsonToTopic(String jsonStr, Type type) {
