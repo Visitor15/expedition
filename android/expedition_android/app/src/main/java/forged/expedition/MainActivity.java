@@ -14,7 +14,9 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
+import forged.expedition.topics.ComputingTopic;
 import forged.expedition.topics.MathTopic;
+import forged.expedition.topics.TalksAndInterviewsTopic;
 import forged.expedition.util.SystemUiHider;
 
 
@@ -207,6 +209,22 @@ public class MainActivity extends Activity {
                 @Override
                 public void receiveResults(List<MathTopic> results) {
                     System.out.println("GOT MATH RESULT:" + results);
+                }
+            });
+
+            khanController.getAllComputingTopics(new DataCallback<ComputingTopic>() {
+
+                @Override
+                public void receiveResults(List<ComputingTopic> results) {
+                    System.out.println("GOT COMPUTING RESULT:" + results);
+                }
+            });
+
+            khanController.getAllTalksAndInterviews(new DataCallback<TalksAndInterviewsTopic>() {
+
+                @Override
+                public void receiveResults(List<TalksAndInterviewsTopic> results) {
+                    System.out.println("GOT TalksAndInterviewsTopic RESULT:" + results);
                 }
             });
 

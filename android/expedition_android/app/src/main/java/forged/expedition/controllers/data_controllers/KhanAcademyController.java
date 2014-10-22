@@ -26,6 +26,7 @@ import forged.expedition.topics.EconomicsAndFinanceTopic;
 import forged.expedition.topics.MathTopic;
 import forged.expedition.topics.PartnerContentTopic;
 import forged.expedition.topics.ScienceTopic;
+import forged.expedition.topics.TalksAndInterviewsTopic;
 import forged.expedition.topics.TestPrepTopic;
 import forged.expedition.topics.Topic;
 
@@ -140,6 +141,16 @@ public class KhanAcademyController extends BaseController {
             @Override
             public void handleCallback(Bundle b) {
                 callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<PartnerContentTopic>>() {
+                }.getType()));
+            }
+        });
+    }
+
+    public void getAllTalksAndInterviews(final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(TalksAndInterviewsTopic.TALKS_AND_INTERVIEWS_TOPIC_ID), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<TalksAndInterviewsTopic>>() {
                 }.getType()));
             }
         });
