@@ -14,9 +14,14 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
+import forged.expedition.topics.ArtsAndHumanitiesTopic;
 import forged.expedition.topics.ComputingTopic;
+import forged.expedition.topics.EconomicsAndFinanceTopic;
 import forged.expedition.topics.MathTopic;
+import forged.expedition.topics.PartnerContentTopic;
+import forged.expedition.topics.ScienceTopic;
 import forged.expedition.topics.TalksAndInterviewsTopic;
+import forged.expedition.topics.TestPrepTopic;
 import forged.expedition.util.SystemUiHider;
 
 
@@ -196,14 +201,6 @@ public class MainActivity extends Activity {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
 
-//            khanController.getPlaylists(new DataCallback<MathTopic>() {
-//
-//                @Override
-//                public void receiveResults(MathTopic results) {
-//                    System.out.println("GOT PLAYLIST RESULT:" + results);
-//                }
-//            });
-
             khanController.getAllMathTopics(new DataCallback<MathTopic>() {
 
                 @Override
@@ -228,27 +225,50 @@ public class MainActivity extends Activity {
                 }
             });
 
-//            khanController.getAllMathTopics(new ControllerCallback() {
-//                @Override
-//                public void handleCallback(Bundle b) {
-//                    String result = b.getString(NetworkService.RESPONSE_DATA);
-//                    System.out.println("GOT MATH RESULT:" + result);
-//
-//                }
-//            });
-//
-//            khanController.getAllScienceTopics(new ControllerCallback() {
-//                @Override
-//                public void handleCallback(Bundle b) {
-//                    String result = b.getString(NetworkService.RESPONSE_DATA);
-//                    System.out.println("GOT SCIENCE RESULT:" + result);
-//                }
-//            });
+            khanController.getAllScienceTopics(new DataCallback<ScienceTopic>() {
+
+                @Override
+                public void receiveResults(List<ScienceTopic> results) {
+                    System.out.println("GOT ScienceTopic RESULT:" + results);
+                }
+            });
+
+            khanController.getAllArtsAndHumanitiesTopics(new DataCallback<ArtsAndHumanitiesTopic>() {
+
+                @Override
+                public void receiveResults(List<ArtsAndHumanitiesTopic> results) {
+                    System.out.println("GOT ArtsAndHumanitiesTopic RESULT:" + results);
+                }
+            });
+
+            khanController.getAllPartnerContentTopics(new DataCallback<PartnerContentTopic>() {
+
+                @Override
+                public void receiveResults(List<PartnerContentTopic> results) {
+                    System.out.println("GOT PartnerContentTopic RESULT:" + results);
+                }
+            });
+
+            khanController.getAllEconomicsAndFinanceTopics(new DataCallback<EconomicsAndFinanceTopic>() {
+
+                @Override
+                public void receiveResults(List<EconomicsAndFinanceTopic> results) {
+                    System.out.println("GOT EconomicsAndFinanceTopic RESULT:" + results);
+                }
+            });
+
+            khanController.getAllTestPrepTopics(new DataCallback<TestPrepTopic>() {
+
+                @Override
+                public void receiveResults(List<TestPrepTopic> results) {
+                    System.out.println("GOT TestPrepTopic RESULT:" + results);
+                }
+            });
 
 //            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
 //            startActivity(intent);
 
-            return false;
+            return true;
         }
     };
 

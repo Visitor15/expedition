@@ -62,21 +62,23 @@ public class KhanAcademyController extends BaseController {
         // Automatically called from BaseController.
     }
 
-    public void getAllMathTopics(ControllerCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), callback);
-    }
-
-    public void getAllMathTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
+    private void sendRequestForResponse(String id, final Type type, final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(id), new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<MathTopic>>() {
-                }.getType()));
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), type));
             }
         });
     }
 
+    public void getAllMathTopics(final DataCallback callback) {
+        sendRequestForResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>(){}.getType(), callback);
+    }
+
     public void getPlaylists(final DataCallback callback) {
+
+        sendRequestForResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>(){}.getType(), callback);
+
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
@@ -87,73 +89,31 @@ public class KhanAcademyController extends BaseController {
     }
 
     public void getAllScienceTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ScienceTopic.SCIENCE_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ScienceTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(ScienceTopic.SCIENCE_ID, new TypeToken<List<ScienceTopic>>(){}.getType(), callback);
     }
 
     public void getAllEconomicsAndFinanceTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(EconomicsAndFinanceTopic.ECONOMICS_AND_FINANCE_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<EconomicsAndFinanceTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(EconomicsAndFinanceTopic.ECONOMICS_AND_FINANCE_ID, new TypeToken<List<EconomicsAndFinanceTopic>>(){}.getType(), callback);
     }
 
     public void getAllArtsAndHumanitiesTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ArtsAndHumanitiesTopic.ARTS_AND_HUMANITIES_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ArtsAndHumanitiesTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(ArtsAndHumanitiesTopic.ARTS_AND_HUMANITIES_ID, new TypeToken<List<ArtsAndHumanitiesTopic>>(){}.getType(), callback);
     }
 
     public void getAllComputingTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(ComputingTopic.COMPUTING_TOPIC_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<ComputingTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(ComputingTopic.COMPUTING_TOPIC_ID, new TypeToken<List<ComputingTopic>>(){}.getType(), callback);
     }
 
     public void getAllTestPrepTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(TestPrepTopic.TEST_PREP_TOPIC_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<TestPrepTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(TestPrepTopic.TEST_PREP_TOPIC_ID, new TypeToken<List<TestPrepTopic>>(){}.getType(), callback);
     }
 
     public void getAllPartnerContentTopics(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(PartnerContentTopic.PARTNER_CONTENT_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<PartnerContentTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(PartnerContentTopic.PARTNER_CONTENT_ID, new TypeToken<List<PartnerContentTopic>>(){}.getType(), callback);
     }
 
     public void getAllTalksAndInterviews(final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(TalksAndInterviewsTopic.TALKS_AND_INTERVIEWS_TOPIC_ID), new ControllerCallback() {
-            @Override
-            public void handleCallback(Bundle b) {
-                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), new TypeToken<List<TalksAndInterviewsTopic>>() {
-                }.getType()));
-            }
-        });
+        sendRequestForResponse(TalksAndInterviewsTopic.TALKS_AND_INTERVIEWS_TOPIC_ID, new TypeToken<List<TalksAndInterviewsTopic>>(){}.getType(), callback);
     }
 
     public List<Topic> convertJsonToTopic(String jsonStr, Type type) {
