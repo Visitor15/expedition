@@ -9,4 +9,6 @@ public interface Topic<T> extends JsonData<T> {
 
     public String getTopicId();
 
+    public String getDisplayName();
+
 }

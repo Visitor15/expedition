@@ -119,4 +119,8 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     }
 
     public abstract List<TopicKeys> getTopicKeys();
+
+    public String getDisplayName() {
+        return title;
+    }
 }

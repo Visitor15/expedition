@@ -1,10 +1,12 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="white_overlay">#66FFFFFF</color>
+    <color name="white_overlay">#88FFFFFF</color>
+    <color name="red_overlay">#DD4B39</color>
     <color name="half_baked">#539289</color>
     <color name="midnight">#203040</color>
     <color name="Amulet">#7DA873</color>
     <color name="Bismark">#4A6E7A</color>
+    <color name="Bismark_overlay">#884A6E7A</color>
 
 </resources>

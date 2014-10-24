@@ -4,13 +4,12 @@
     android:layout_height="54dp"
     android:background="@android:color/background_light"
     android:clickable="true"
-    android:id="@+id/menu_btn">
+    android:id="@+id/container">
 
     <ViewFlipper
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/viewFlipper"
-        android:background="#66000000">
+        android:id="@+id/viewFlipper">
 
 
 

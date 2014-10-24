@@ -14,14 +14,7 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.controllers.data_controllers.RequestController;
 import forged.expedition.networking.NetworkServiceConnection;
-import forged.expedition.topics.ArtsAndHumanitiesTopic;
-import forged.expedition.topics.ComputingTopic;
-import forged.expedition.topics.EconomicsAndFinanceTopic;
 import forged.expedition.topics.MathTopic;
-import forged.expedition.topics.PartnerContentTopic;
-import forged.expedition.topics.ScienceTopic;
-import forged.expedition.topics.TalksAndInterviewsTopic;
-import forged.expedition.topics.TestPrepTopic;
 import forged.expedition.util.SystemUiHider;
 
 
@@ -134,7 +127,7 @@ public class MainActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.dummy_button).setOnClickListener(clickListener);
 
         khanController = new KhanAcademyController();
         requestController = new RequestController();
@@ -188,6 +181,22 @@ public class MainActivity extends Activity {
 //        mNetworkServiceConnection.sendRequest();
     }
 
+    View.OnClickListener clickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            khanController.getAllMathTopics(new DataCallback<MathTopic>() {
+
+                @Override
+                public void receiveResults(List<MathTopic> results) {
+                    System.out.println("GOT MATH RESULT:" + results);
+                }
+            });
+
+        }
+    };
+
+
 
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
@@ -209,61 +218,61 @@ public class MainActivity extends Activity {
                 }
             });
 
-            khanController.getAllComputingTopics(new DataCallback<ComputingTopic>() {
-
-                @Override
-                public void receiveResults(List<ComputingTopic> results) {
-                    System.out.println("GOT COMPUTING RESULT:" + results);
-                }
-            });
-
-            khanController.getAllTalksAndInterviews(new DataCallback<TalksAndInterviewsTopic>() {
-
-                @Override
-                public void receiveResults(List<TalksAndInterviewsTopic> results) {
-                    System.out.println("GOT TalksAndInterviewsTopic RESULT:" + results);
-                }
-            });
-
-            khanController.getAllScienceTopics(new DataCallback<ScienceTopic>() {
-
-                @Override
-                public void receiveResults(List<ScienceTopic> results) {
-                    System.out.println("GOT ScienceTopic RESULT:" + results);
-                }
-            });
-
-            khanController.getAllArtsAndHumanitiesTopics(new DataCallback<ArtsAndHumanitiesTopic>() {
-
-                @Override
-                public void receiveResults(List<ArtsAndHumanitiesTopic> results) {
-                    System.out.println("GOT ArtsAndHumanitiesTopic RESULT:" + results);
-                }
-            });
-
-            khanController.getAllPartnerContentTopics(new DataCallback<PartnerContentTopic>() {
-
-                @Override
-                public void receiveResults(List<PartnerContentTopic> results) {
-                    System.out.println("GOT PartnerContentTopic RESULT:" + results);
-                }
-            });
-
-            khanController.getAllEconomicsAndFinanceTopics(new DataCallback<EconomicsAndFinanceTopic>() {
-
-                @Override
-                public void receiveResults(List<EconomicsAndFinanceTopic> results) {
-                    System.out.println("GOT EconomicsAndFinanceTopic RESULT:" + results);
-                }
-            });
-
-            khanController.getAllTestPrepTopics(new DataCallback<TestPrepTopic>() {
-
-                @Override
-                public void receiveResults(List<TestPrepTopic> results) {
-                    System.out.println("GOT TestPrepTopic RESULT:" + results);
-                }
-            });
+//            khanController.getAllComputingTopics(new DataCallback<ComputingTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<ComputingTopic> results) {
+//                    System.out.println("GOT COMPUTING RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllTalksAndInterviews(new DataCallback<TalksAndInterviewsTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<TalksAndInterviewsTopic> results) {
+//                    System.out.println("GOT TalksAndInterviewsTopic RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllScienceTopics(new DataCallback<ScienceTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<ScienceTopic> results) {
+//                    System.out.println("GOT ScienceTopic RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllArtsAndHumanitiesTopics(new DataCallback<ArtsAndHumanitiesTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<ArtsAndHumanitiesTopic> results) {
+//                    System.out.println("GOT ArtsAndHumanitiesTopic RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllPartnerContentTopics(new DataCallback<PartnerContentTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<PartnerContentTopic> results) {
+//                    System.out.println("GOT PartnerContentTopic RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllEconomicsAndFinanceTopics(new DataCallback<EconomicsAndFinanceTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<EconomicsAndFinanceTopic> results) {
+//                    System.out.println("GOT EconomicsAndFinanceTopic RESULT:" + results);
+//                }
+//            });
+//
+//            khanController.getAllTestPrepTopics(new DataCallback<TestPrepTopic>() {
+//
+//                @Override
+//                public void receiveResults(List<TestPrepTopic> results) {
+//                    System.out.println("GOT TestPrepTopic RESULT:" + results);
+//                }
+//            });
 
 //            Intent intent = new Intent(MainActivity.this, SubjectExplorerActivity.class);
 //            startActivity(intent);

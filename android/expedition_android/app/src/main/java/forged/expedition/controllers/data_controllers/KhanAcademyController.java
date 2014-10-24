@@ -62,7 +62,7 @@ public class KhanAcademyController extends BaseController {
         // Automatically called from BaseController.
     }
 
-    private void sendRequestForResponse(String id, final Type type, final DataCallback callback) {
+    private void sendRequestForAsyncResponse(String id, final Type type, final DataCallback callback) {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(id), new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
@@ -72,12 +72,14 @@ public class KhanAcademyController extends BaseController {
     }
 
     public void getAllMathTopics(final DataCallback callback) {
-        sendRequestForResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>() {
+        }.getType(), callback);
     }
 
     public void getPlaylists(final DataCallback callback) {
 
-        sendRequestForResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(MathTopic.MATH_ID, new TypeToken<List<MathTopic>>() {
+        }.getType(), callback);
 
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(MathTopic.MATH_ID), new ControllerCallback() {
             @Override
@@ -89,31 +91,38 @@ public class KhanAcademyController extends BaseController {
     }
 
     public void getAllScienceTopics(final DataCallback callback) {
-        sendRequestForResponse(ScienceTopic.SCIENCE_ID, new TypeToken<List<ScienceTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(ScienceTopic.SCIENCE_ID, new TypeToken<List<ScienceTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllEconomicsAndFinanceTopics(final DataCallback callback) {
-        sendRequestForResponse(EconomicsAndFinanceTopic.ECONOMICS_AND_FINANCE_ID, new TypeToken<List<EconomicsAndFinanceTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(EconomicsAndFinanceTopic.ECONOMICS_AND_FINANCE_ID, new TypeToken<List<EconomicsAndFinanceTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllArtsAndHumanitiesTopics(final DataCallback callback) {
-        sendRequestForResponse(ArtsAndHumanitiesTopic.ARTS_AND_HUMANITIES_ID, new TypeToken<List<ArtsAndHumanitiesTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(ArtsAndHumanitiesTopic.ARTS_AND_HUMANITIES_ID, new TypeToken<List<ArtsAndHumanitiesTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllComputingTopics(final DataCallback callback) {
-        sendRequestForResponse(ComputingTopic.COMPUTING_TOPIC_ID, new TypeToken<List<ComputingTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(ComputingTopic.COMPUTING_TOPIC_ID, new TypeToken<List<ComputingTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllTestPrepTopics(final DataCallback callback) {
-        sendRequestForResponse(TestPrepTopic.TEST_PREP_TOPIC_ID, new TypeToken<List<TestPrepTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(TestPrepTopic.TEST_PREP_TOPIC_ID, new TypeToken<List<TestPrepTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllPartnerContentTopics(final DataCallback callback) {
-        sendRequestForResponse(PartnerContentTopic.PARTNER_CONTENT_ID, new TypeToken<List<PartnerContentTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(PartnerContentTopic.PARTNER_CONTENT_ID, new TypeToken<List<PartnerContentTopic>>() {
+        }.getType(), callback);
     }
 
     public void getAllTalksAndInterviews(final DataCallback callback) {
-        sendRequestForResponse(TalksAndInterviewsTopic.TALKS_AND_INTERVIEWS_TOPIC_ID, new TypeToken<List<TalksAndInterviewsTopic>>(){}.getType(), callback);
+        sendRequestForAsyncResponse(TalksAndInterviewsTopic.TALKS_AND_INTERVIEWS_TOPIC_ID, new TypeToken<List<TalksAndInterviewsTopic>>() {
+        }.getType(), callback);
     }
 
     public List<Topic> convertJsonToTopic(String jsonStr, Type type) {

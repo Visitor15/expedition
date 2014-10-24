@@ -20,7 +20,7 @@ public class BannerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.banner_fragment, container, true);
+        return inflater.inflate(R.layout.banner_fragment, container);
     }
 
     @Override
