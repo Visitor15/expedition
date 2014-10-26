@@ -2,12 +2,9 @@ package forged.expedition;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -63,7 +60,31 @@ public class SubjectExplorerActivity extends Activity {
 
                     @Override
                     public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).setItemList(results);
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
+                khanController.getAllScienceTopics(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
+                khanController.getAllArtsAndHumanitiesTopics(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
+                khanController.getAllComputingTopics(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
                     }
                 });
             }
@@ -108,113 +129,5 @@ public class SubjectExplorerActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-    }
-
-    public class SubjectListExpandableAdapter implements ExpandableListAdapter {
-
-        private final LayoutInflater mInflater;
-        List<Topic> topicList;
-
-
-        public SubjectListExpandableAdapter(List<Topic> list) {
-            mInflater = LayoutInflater.from(Expedition.getReference());
-            topicList = list;
-        }
-
-        @Override
-        public void registerDataSetObserver(DataSetObserver observer) {
-
-        }
-
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver observer) {
-
-        }
-
-        @Override
-        public int getGroupCount() {
-            return topicList.size();
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            return 0;
-        }
-
-        @Override
-        public Topic getGroup(int groupPosition) {
-            return null;
-        }
-
-        @Override
-        public Topic getChild(int groupPosition, int childPosition) {
-            return null;
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            return 0;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            return 0;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                convertView = mInflater.inflate(R.layout.subject_item, null);
-            }
-
-            ((TextView) convertView.findViewById(R.id.textView_title)).setText(topicList.get(groupPosition).getDisplayName());
-
-            return convertView;
-        }
-
-        @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            return null;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return false;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public void onGroupExpanded(int groupPosition) {
-
-        }
-
-        @Override
-        public void onGroupCollapsed(int groupPosition) {
-
-        }
-
-        @Override
-        public long getCombinedChildId(long groupId, long childId) {
-            return 0;
-        }
-
-        @Override
-        public long getCombinedGroupId(long groupId) {
-            return 0;
-        }
     }
 }

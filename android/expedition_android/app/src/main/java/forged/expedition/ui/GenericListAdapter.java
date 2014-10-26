@@ -46,7 +46,10 @@ public abstract class GenericListAdapter<T> extends BaseAdapter {
     }
 
     public void addToList(List<T> items) {
-        this.itemList.addAll(items);
+        if(itemList == null) {
+            itemList = new ArrayList<T>();
+        }
+        itemList.addAll(items);
         notifyDataSetChanged();
     }
 
