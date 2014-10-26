@@ -1,7 +1,7 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="white_overlay">#88FFFFFF</color>
+    <color name="white_overlay">#AAFFFFFF</color>
     <color name="red_overlay">#DD4B39</color>
     <color name="half_baked">#539289</color>
     <color name="midnight">#203040</color>
