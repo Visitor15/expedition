@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.topics.Topic;
 import forged.expedition.ui.BannerFragment;
+import forged.expedition.ui.GenericListAdapter;
 
 /**
  * Created by visitor15 on 10/19/14.
@@ -27,12 +28,29 @@ public class SubjectExplorerActivity extends Activity {
 
     private BannerFragment bannerFragment;
 
+    private GridView topicGrid;
+
     public SubjectExplorerActivity() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subject_explorer);
+
+        topicGrid = (GridView) findViewById(R.id.gridView);
+
+        topicGrid.setAdapter(new GenericListAdapter<Topic>() {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if(convertView == null) {
+                    convertView = getLayoutInflater().inflate(R.layout.subject_item, null);
+                }
+
+                ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).getDisplayName());
+
+                return convertView;
+            }
+        });
 
         khanController = new KhanAcademyController();
 
@@ -45,7 +63,7 @@ public class SubjectExplorerActivity extends Activity {
 
                     @Override
                     public void receiveResults(final List results) {
-                        ((ExpandableListView) findViewById(R.id.expandableListView)).setAdapter(new SubjectListExpandableAdapter(results));
+                        ((GenericListAdapter) topicGrid.getAdapter()).setItemList(results);
                     }
                 });
             }

@@ -11,11 +11,9 @@
         android:id="@+id/fragment"
         android:layout_alignParentTop="true" />
 
-    <ExpandableListView
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/expandableListView"
-        android:overScrollHeader="@color/red_overlay"
-        android:headerDividersEnabled="false" />
+        android:id="@+id/gridView" />
 
 </LinearLayout>
