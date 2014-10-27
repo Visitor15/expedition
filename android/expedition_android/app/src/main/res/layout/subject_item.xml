@@ -10,6 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="64dip"
         android:layout_margin="8dip"
+        android:background="@color/white_overlay"
         android:gravity="center_vertical">
 
     <forged.expedition.ui.CircularImageView
