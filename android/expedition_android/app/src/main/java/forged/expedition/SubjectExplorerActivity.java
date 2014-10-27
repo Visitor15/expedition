@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class SubjectExplorerActivity extends Activity {
                     convertView = getLayoutInflater().inflate(R.layout.subject_item, null);
                 }
 
-//                ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).getDisplayName());
+                ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).getDisplayName());
 
                 return convertView;
             }
