@@ -3,6 +3,10 @@
     <color name="black_overlay">#66000000</color>
     <color name="white_overlay">#AAFFFFFF</color>
     <color name="red_overlay">#DD4B39</color>
+    <color name="blue_overlay">#0099CC</color>
+    <color name="purple_overlay">#9933CC</color>
+    <color name="green_overlay">#669900</color>
+    <color name="orange_overlay">#FF8800</color>
     <color name="half_baked">#539289</color>
     <color name="midnight">#203040</color>
     <color name="Amulet">#7DA873</color>

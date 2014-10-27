@@ -11,4 +11,6 @@ public interface Topic<T> extends JsonData<T> {
 
     public String getDisplayName();
 
+    public int getDefaultColorId();
+
 }

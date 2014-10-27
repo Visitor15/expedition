@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class ComputingTopic extends AbstractTopic<ComputingTopic> {
 
     public static final String COMPUTING_TOPIC_ID = "computing";
+
+    public static final int DEFAULT_COLOR = R.color.blue_overlay;
 
     public ComputingTopic() {
 
@@ -33,5 +36,10 @@ public class ComputingTopic extends AbstractTopic<ComputingTopic> {
     @Override
     public ComputingTopic fromJson(JsonData data) {
         return null;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

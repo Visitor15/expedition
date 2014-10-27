@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class EconomicsAndFinanceTopic extends AbstractTopic<EconomicsAndFinanceTopic> {
 
     public static final String ECONOMICS_AND_FINANCE_ID = "economics-finance-domain";
+
+    public static final int DEFAULT_COLOR = R.color.green_overlay;
 
     public EconomicsAndFinanceTopic() {
 
@@ -33,5 +36,10 @@ public class EconomicsAndFinanceTopic extends AbstractTopic<EconomicsAndFinanceT
     @Override
     public EconomicsAndFinanceTopic fromJson(JsonData data) {
         return null;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

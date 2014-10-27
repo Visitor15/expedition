@@ -70,4 +70,18 @@ public class CircularImageView extends ImageView {
         c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
         this.setImageBitmap(circleBitmap);
     }
+
+    public void setColor(int colorId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
+        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(getResources().getColor(colorId));
+
+        Canvas c = new Canvas(circleBitmap);
+        c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2.1f, paint);
+        this.setImageBitmap(circleBitmap);
+        this.refreshDrawableState();
+    }
 }

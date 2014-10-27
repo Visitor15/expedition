@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class PartnerContentTopic extends AbstractTopic<PartnerContentTopic> {
 
     public static final String PARTNER_CONTENT_ID = "partner-content";
+
+    public static final int DEFAULT_COLOR = R.color.green_overlay;
 
     PartnerContentTopic() {
 
@@ -33,5 +36,10 @@ public class PartnerContentTopic extends AbstractTopic<PartnerContentTopic> {
     @Override
     public PartnerContentTopic fromJson(JsonData data) {
         return null;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

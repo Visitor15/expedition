@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class CollegeAdmissionTopic extends AbstractTopic<CollegeAdmissionTopic> {
 
     public static final String COLLEGE_ADMISSION_TOPIC_ID = "college-admissions";
+
+    public static final int DEFAULT_COLOR = R.color.green_overlay;
 
     public CollegeAdmissionTopic() {
 
@@ -33,5 +36,10 @@ public class CollegeAdmissionTopic extends AbstractTopic<CollegeAdmissionTopic> 
     @Override
     public CollegeAdmissionTopic fromJson(JsonData data) {
         return null;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

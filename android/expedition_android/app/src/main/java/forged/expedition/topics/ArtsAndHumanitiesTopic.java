@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class ArtsAndHumanitiesTopic extends AbstractTopic<ArtsAndHumanitiesTopic> {
 
     public static final String ARTS_AND_HUMANITIES_ID = "humanities";
+
+    public static final int DEFAULT_COLOR = R.color.purple_overlay;
 
     public ArtsAndHumanitiesTopic() {
 
@@ -33,5 +36,10 @@ public class ArtsAndHumanitiesTopic extends AbstractTopic<ArtsAndHumanitiesTopic
     @Override
     public ArtsAndHumanitiesTopic fromJson(JsonData data) {
         return null;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

@@ -14,6 +14,7 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.topics.Topic;
 import forged.expedition.ui.BannerFragment;
+import forged.expedition.ui.CircularImageView;
 import forged.expedition.ui.GenericListAdapter;
 
 /**
@@ -44,6 +45,7 @@ public class SubjectExplorerActivity extends Activity {
                 }
 
                 ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).getDisplayName());
+//                ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(getItemList().get(position).getDefaultColorId());
 
                 return convertView;
             }
@@ -129,5 +131,16 @@ public class SubjectExplorerActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
+        switch(getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE: {
+                topicGrid.setNumColumns(2);
+                break;
+            }
+            case Configuration.ORIENTATION_PORTRAIT: {
+                topicGrid.setNumColumns(1);
+                break;
+            }
+        }
     }
 }

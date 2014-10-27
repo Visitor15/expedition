@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class ScienceTopic extends AbstractTopic<ScienceTopic> {
 
     public static final String SCIENCE_ID = "science";
+
+    public static final int DEFAULT_COLOR = R.color.green_overlay;
 
     public ScienceTopic() {
 
@@ -33,5 +36,10 @@ public class ScienceTopic extends AbstractTopic<ScienceTopic> {
     @Override
     public String getTopicId() {
         return "science";
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }

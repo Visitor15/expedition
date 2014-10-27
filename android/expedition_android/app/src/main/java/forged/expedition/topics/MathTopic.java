@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import java.util.List;
 
+import forged.expedition.R;
 import forged.expedition.data.JsonData;
 
 /**
@@ -10,6 +11,8 @@ import forged.expedition.data.JsonData;
 public class MathTopic extends AbstractTopic<MathTopic> {
 
     public static final String MATH_ID = "math";
+
+    public static final int DEFAULT_COLOR = R.color.red_overlay;
 
     public MathTopic() {
 
@@ -33,5 +36,10 @@ public class MathTopic extends AbstractTopic<MathTopic> {
     @Override
     public String getTopicId() {
         return MATH_ID;
+    }
+
+    @Override
+    public int getDefaultColorId() {
+        return DEFAULT_COLOR;
     }
 }
