@@ -90,6 +90,30 @@ public class SubjectExplorerActivity extends Activity {
                     }
                 });
 
+                khanController.getAllTestPrepTopics(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
+                khanController.getAllPartnerContentTopics(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
+                khanController.getAllTalksAndInterviews(new DataCallback() {
+
+                    @Override
+                    public void receiveResults(final List results) {
+                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+                    }
+                });
+
 //                khanController.getAll(new DataCallback() {
 //
 //                    @Override

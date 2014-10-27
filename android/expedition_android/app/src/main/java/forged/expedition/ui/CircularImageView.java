@@ -49,24 +49,9 @@ public class CircularImageView extends ImageView {
 
     private void init(AttributeSet attrs) {
         toSetDips = Utils.dipsToPixels(getContext(), 48);
-////        bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
-//        circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-//
-////        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-//        paint = new Paint();
-////        paint.setShader(shader);
-//        paint.setAntiAlias(true);
-//        paint.setColor(getResources().getColor(R.color.red_overlay));
-//
-//        canvas = new Canvas(circleBitmap);
-//        canvas.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2.1f, paint);
-//        this.setImageBitmap(circleBitmap);
     }
 
     public void setColor(int colorId) {
-
-
-
 //        bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
         circleBitmap = Bitmap.createBitmap(toSetDips, toSetDips, Bitmap.Config.ARGB_8888);
 
