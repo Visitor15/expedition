@@ -1,6 +1,7 @@
 package forged.expedition.controllers.data_controllers;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import forged.expedition.Expedition;
 import forged.expedition.KhanAcademy;
 import forged.expedition.controllers.BaseController;
 import forged.expedition.controllers.ControllerCallback;
@@ -64,6 +66,15 @@ public class KhanAcademyController extends BaseController {
 
     private void sendRequestForAsyncResponse(String id, final Type type, final DataCallback callback) {
         networkServiceConnection.sendRequestForResponse(KhanAcademy.getTopicUrl(id), new ControllerCallback() {
+            @Override
+            public void handleCallback(Bundle b) {
+                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), type));
+            }
+        });
+    }
+
+    private void createRequestWithUrlForAsyncResponse(String url, final Type type, final DataCallback callback) {
+        networkServiceConnection.sendRequestForResponse(url, new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
                 callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), type));
@@ -125,13 +136,24 @@ public class KhanAcademyController extends BaseController {
         }.getType(), callback);
     }
 
+    public void getAll(final DataCallback callback) {
+        createRequestWithUrlForAsyncResponse(KhanAcademy.TOPIC_TREE_URL, new TypeToken<List<Topic>>() {
+        }.getType(), callback);
+    }
+
     public List<Topic> convertJsonToTopic(String jsonStr, Type type) {
 
         try {
             Gson gson = new GsonBuilder().create();
             JSONObject obj = new JSONObject(jsonStr);
 
+
+
+
             JSONArray testArray = obj.getJSONArray("children");
+
+            System.out.println("GOT ARRAY SIZE: " + testArray.length());
+            Toast.makeText(Expedition.getReference(), "GOT ARRAY SIZE: " + testArray.length(), Toast.LENGTH_LONG).show();
 
             return gson.fromJson(testArray.toString(), type);
         } catch (JSONException e) {

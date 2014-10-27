@@ -2,21 +2,33 @@ package forged.expedition.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import forged.expedition.R;
+import forged.expedition.util.Utils;
 
 /**
  * Created by visitor15 on 10/26/14.
  */
 public class CircularImageView extends ImageView {
+
+    private Bitmap bitmap;
+
+    private Bitmap circleBitmap;
+
+    private Canvas canvas;
+
+    private BitmapShader shader;
+
+    private Drawable mDrawable;
+
+    private Paint paint;
+
+    private static int toSetDips = 0;
 
     public CircularImageView(Context context) {
         super(context);
@@ -36,52 +48,36 @@ public class CircularImageView extends ImageView {
     }
 
     private void init(AttributeSet attrs) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
-        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-
-        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        Paint paint = new Paint();
-//        paint.setShader(shader);
-        paint.setAntiAlias(true);
-        paint.setColor(getResources().getColor(R.color.red_overlay));
-
-        Canvas c = new Canvas(circleBitmap);
-        c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2.1f, paint);
-        this.setImageBitmap(circleBitmap);
-    }
-
-    public void initWithNewImage() {
-
-        Drawable mDrawable = this.getDrawable();
-
-        Bitmap bitmap = Bitmap.createBitmap(mDrawable.getIntrinsicWidth(), mDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        mDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        mDrawable.draw(canvas);
-
-        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-
-        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        Paint paint = new Paint();
-        paint.setShader(shader);
-        paint.setAntiAlias(true);
-
-        Canvas c = new Canvas(circleBitmap);
-        c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
-        this.setImageBitmap(circleBitmap);
+        toSetDips = Utils.dipsToPixels(getContext(), 48);
+////        bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
+//        circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+//
+////        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+//        paint = new Paint();
+////        paint.setShader(shader);
+//        paint.setAntiAlias(true);
+//        paint.setColor(getResources().getColor(R.color.red_overlay));
+//
+//        canvas = new Canvas(circleBitmap);
+//        canvas.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2.1f, paint);
+//        this.setImageBitmap(circleBitmap);
     }
 
     public void setColor(int colorId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
-        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-        Paint paint = new Paint();
+
+
+//        bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.google_icon);
+        circleBitmap = Bitmap.createBitmap(toSetDips, toSetDips, Bitmap.Config.ARGB_8888);
+
+//        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        paint = new Paint();
+//        paint.setShader(shader);
         paint.setAntiAlias(true);
         paint.setColor(getResources().getColor(colorId));
 
-        Canvas c = new Canvas(circleBitmap);
-        c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2.1f, paint);
+        canvas = new Canvas(circleBitmap);
+        canvas.drawCircle(toSetDips/2, toSetDips/2, toSetDips / 2.1f, paint);
         this.setImageBitmap(circleBitmap);
-        this.refreshDrawableState();
     }
 }

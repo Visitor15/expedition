@@ -38,18 +38,22 @@ public class HttpConnector {
             InputStream inStream = httpConnection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
 
-            String line;
-            StringBuffer strResponse = new StringBuffer();
+            String line = "";
+//            StringBuffer strResponse = new StringBuffer();
 
+            StringBuilder strBuilder = new StringBuilder(line);
             while((line = reader.readLine()) != null) {
-                strResponse.append(line);
+//                strResponse.append(line);
+                strBuilder.append(line);
             }
 
-            response = strResponse.toString();
+            response = strBuilder.toString();
+
+//            response = strResponse.toString();
 
             reader.close();
 
-            response = strResponse.toString();
+//            response = strResponse.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {

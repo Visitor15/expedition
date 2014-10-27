@@ -45,7 +45,7 @@ public class SubjectExplorerActivity extends Activity {
                 }
 
                 ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).getDisplayName());
-//                ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(getItemList().get(position).getDefaultColorId());
+                ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(getItemList().get(position).getDefaultColorId());
 
                 return convertView;
             }
@@ -89,6 +89,15 @@ public class SubjectExplorerActivity extends Activity {
                         ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
                     }
                 });
+
+//                khanController.getAll(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        System.out.println("GOT FINAL RESULTS: " + results.size());
+////                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
             }
         });
     }
