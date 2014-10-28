@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="64dip"
+        android:paddingTop="60dip"
+        android:layout_marginRight="16dip"
+        android:layout_marginLeft="16dip"
         android:id="@+id/gridView" />
 
     <fragment
