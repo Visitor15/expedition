@@ -4,5 +4,15 @@
     <string name="app_name">Expedition</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="math">Math</string>
+    <string name="science">Science</string>
+    <string name="economics_and_finance">Economics and finance</string>
+    <string name="arts_and_humanities">Arts and humanities</string>
+    <string name="computing">Computing</string>
+    <string name="test_prep">Test prep</string>
+    <string name="partner_content">Partner content</string>
+    <string name="college_admissions">College admissions</string>
+    <string name="talks_and_interviews">Talks and interviews</string>
+    <string name="coach_and_classroom_resources">Coach and classroom resources</string>
 
 </resources>
