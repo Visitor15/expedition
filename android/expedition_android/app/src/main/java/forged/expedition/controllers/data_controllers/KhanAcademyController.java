@@ -141,6 +141,11 @@ public class KhanAcademyController extends BaseController {
         }.getType(), callback);
     }
 
+    public void getTopicsByTopicName(String topicName, final DataCallback callback) {
+        sendRequestForAsyncResponse(KhanAcademy.getTopicUrl(topicName), new TypeToken<List<Topic>>() {
+        }.getType(), callback);
+    }
+
     public List<Topic> convertJsonToTopic(String jsonStr, Type type) {
 
         try {

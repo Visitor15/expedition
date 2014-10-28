@@ -55,64 +55,64 @@ public class SubjectExplorerActivity extends Activity {
 
         bannerFragment = ((BannerFragment) getFragmentManager().findFragmentById(R.id.fragment));
 
-        bannerFragment.getView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                khanController.getAllMathTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllScienceTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllArtsAndHumanitiesTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllComputingTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllTestPrepTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllPartnerContentTopics(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
-
-                khanController.getAllTalksAndInterviews(new DataCallback() {
-
-                    @Override
-                    public void receiveResults(final List results) {
-                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
-                    }
-                });
+//        bannerFragment.getView().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                khanController.getAllMathTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllScienceTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllArtsAndHumanitiesTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllComputingTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllTestPrepTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllPartnerContentTopics(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
+//
+//                khanController.getAllTalksAndInterviews(new DataCallback() {
+//
+//                    @Override
+//                    public void receiveResults(final List results) {
+//                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
+//                    }
+//                });
 
 //                khanController.getAll(new DataCallback() {
 //
@@ -122,8 +122,8 @@ public class SubjectExplorerActivity extends Activity {
 ////                        ((GenericListAdapter) topicGrid.getAdapter()).addToList(results);
 //                    }
 //                });
-            }
-        });
+//            }
+//        });
     }
 
     @Override
