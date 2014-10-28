@@ -25,23 +25,25 @@
         android:id="@+id/circularImageView_icon" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_toRightOf="@+id/circularImageView_icon"
             android:textColor="#282828"
             android:layout_marginLeft="8dp"
-            android:maxLines="1"
+            android:layout_marginRight="24dip"
+            android:maxLines="2"
             android:ellipsize="end"
             android:text="Large Text"
             android:id="@+id/textView_title" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_below="@+id/textView_title"
             android:layout_alignLeft="@+id/textView_title"
+            android:layout_marginRight="24dip"
             android:maxLines="3"
             android:text="Small Text"
             android:id="@+id/textView_description" />
