@@ -18,7 +18,6 @@ import forged.expedition.Expedition;
 import forged.expedition.R;
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
-import forged.expedition.topics.Topic;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -51,7 +50,7 @@ public class TopicFragment extends Fragment {
 
         topicGrid = (GridView) rootView.findViewById(R.id.gridView);
 
-        initGridView();
+
 
         return rootView;
     }
@@ -64,6 +63,7 @@ public class TopicFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        initGridView();
     }
 
     @Override
@@ -97,36 +97,38 @@ public class TopicFragment extends Fragment {
     }
 
     private void initGridView() {
-        gridAdapter = new GridAdapter(Arrays.asList(getResources().getStringArray(R.array.default_topics)));
-        topicGrid.setAdapter(gridAdapter);
-        topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                khanController.getTopicsByTopicName(((GridAdapter) topicGrid.getAdapter()).getItem(position).toString(), new DataCallback() {
-                    @Override
-                    public void receiveResults(List results) {
-                        Toast.makeText(Expedition.getReference(), "Got " + ((GridAdapter) topicGrid.getAdapter()).getItem(position) + " topic: " + results.size(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-
-        gridAdapter.notifyDataSetChanged();
+        if(gridAdapter == null) {
+            gridAdapter = new GridAdapter(Arrays.asList(getResources().getStringArray(R.array.default_topics)));
+            topicGrid.setAdapter(gridAdapter);
+            topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    khanController.getTopicsByTopicName(((GridAdapter) topicGrid.getAdapter()).getItem(position).toString(), new DataCallback() {
+                        @Override
+                        public void receiveResults(List results) {
+                            Toast.makeText(Expedition.getReference(), "Got " + ((GridAdapter) topicGrid.getAdapter()).getItem(position) + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+                            gridAdapter.setItemList(results);
+                            gridAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
+        }
     }
 
-    private class GridAdapter extends GenericListAdapter<String> {
+    public class GridAdapter extends GenericListAdapter {
 
-        public GridAdapter(List<String> dataList) {
+        public GridAdapter(List dataList) {
             super(dataList);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if(convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.topic_item_card, null);
+                convertView = mInflater.inflate(R.layout.topic_item_card, parent, false);
             }
 
-            ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position));
+            ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).toString());
 
             return convertView;
         }

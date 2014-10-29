@@ -123,4 +123,9 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     public String getDisplayName() {
         return title;
     }
+
+    @Override
+    public String toString() {
+        return getDisplayName();
+    }
 }

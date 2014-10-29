@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import forged.expedition.Expedition;
 import forged.expedition.KhanAcademy;
@@ -25,6 +26,7 @@ import forged.expedition.services.NetworkService;
 import forged.expedition.topics.ArtsAndHumanitiesTopic;
 import forged.expedition.topics.ComputingTopic;
 import forged.expedition.topics.EconomicsAndFinanceTopic;
+import forged.expedition.topics.GenericTopic;
 import forged.expedition.topics.MathTopic;
 import forged.expedition.topics.PartnerContentTopic;
 import forged.expedition.topics.ScienceTopic;
@@ -142,7 +144,7 @@ public class KhanAcademyController extends BaseController {
     }
 
     public void getTopicsByTopicName(String topicName, final DataCallback callback) {
-        sendRequestForAsyncResponse(KhanAcademy.getTopicUrl(topicName), new TypeToken<List<Topic>>() {
+        createRequestWithUrlForAsyncResponse(KhanAcademy.getTopicUrl(convertToFriendlyString(topicName)), new TypeToken<List<GenericTopic>>() {
         }.getType(), callback);
     }
 
@@ -170,5 +172,9 @@ public class KhanAcademyController extends BaseController {
     @Override
     public void onHandleGenericCallback(Bundle b) {
         ((ControllerCallback) b.getSerializable("callback")).handleCallback(b);
+    }
+
+    private String convertToFriendlyString(String str) {
+        return str.replace(" ", "_").toLowerCase(Locale.getDefault());
     }
 }

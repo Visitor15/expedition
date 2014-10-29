@@ -18,8 +18,7 @@ android:background="@color/Bismark">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="forged.expedition.ui.TopicFragment"
-        android:id="@+id/topic_fragment"
-        android:layout_alignParentTop="true" />
+        android:id="@+id/topic_fragment" />
 
 <fragment
     android:layout_width="fill_parent"

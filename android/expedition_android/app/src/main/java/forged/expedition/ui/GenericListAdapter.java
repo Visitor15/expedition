@@ -17,7 +17,7 @@ public abstract class GenericListAdapter<T> extends BaseAdapter {
 
     List<T> itemList;
 
-    private LayoutInflater mInflater;
+    public LayoutInflater mInflater;
 
     public GenericListAdapter() {
         createLayoutInflater();
@@ -55,7 +55,8 @@ public abstract class GenericListAdapter<T> extends BaseAdapter {
 
     public void setItemList(List<T> items) {
         if(itemList != null) {
-            itemList.clear();;
+            itemList = null;
+            itemList = new ArrayList<T>(items);
         }
         else {
             itemList = new ArrayList<T>();
