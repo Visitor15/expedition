@@ -20,6 +20,7 @@ import forged.expedition.R;
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.topics.GenericTopic;
+import forged.expedition.topics.Topic;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -35,7 +36,6 @@ public class TopicFragment extends Fragment {
     private KhanAcademyController khanController;
 
     public TopicFragment() {
-
     }
 
     @Override
@@ -51,8 +51,6 @@ public class TopicFragment extends Fragment {
         rootView = inflater.inflate(R.layout.topic_fragment, container);
 
         topicGrid = (GridView) rootView.findViewById(R.id.gridView);
-
-
 
         return rootView;
     }
@@ -142,6 +140,7 @@ public class TopicFragment extends Fragment {
             }
 
             ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).toString());
+            ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(((GenericTopic) getItemList().get(position)).getDefaultColorId());
 
             return convertView;
         }
