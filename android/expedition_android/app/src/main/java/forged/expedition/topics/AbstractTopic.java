@@ -128,4 +128,14 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     public String toString() {
         return getDisplayName();
     }
+
+    @Override
+    public void setTopicId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setDisplayTitle(String title) {
+        this.title = title;
+    }
 }

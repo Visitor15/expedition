@@ -13,4 +13,8 @@ public interface Topic<T> extends JsonData<T> {
 
     public int getDefaultColorId();
 
+    public void setTopicId(String id);
+
+    public void setDisplayTitle(String title);
+
 }

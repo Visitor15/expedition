@@ -3,34 +3,34 @@
 
     <array name="default_topics">
         <item>
-            @string/math
+            "Math#math"
         </item>
         <item>
-            @string/science
+           "Science#science
         </item>
         <item>
-            @string/economics_and_finance
+            "Economics and finance#economics-finance-domain
         </item>
         <item>
-            @string/arts_and_humanities
+            "Arts and humanities#humanities
         </item>
         <item>
-            @string/computing
+            "Computing#computing"
         </item>
         <item>
-            @string/test_prep
+            "Test prep#test-prep
         </item>
         <item>
-            @string/partner_content
+            "Partner content#partner-content"
         </item>
         <item>
-            @string/college_admissions
+            "College admissions#college-admissions"
         </item>
         <item>
-            @string/talks_and_interviews
+            "Talks and interviews#talks-and-interviews"
         </item>
         <item>
-            @string/coach_and_classroom_resources
+            "Coach and classroom resources#coach-res"
         </item>
     </array>
 

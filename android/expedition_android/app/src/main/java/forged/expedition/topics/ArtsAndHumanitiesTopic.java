@@ -42,4 +42,14 @@ public class ArtsAndHumanitiesTopic extends AbstractTopic<ArtsAndHumanitiesTopic
     public int getDefaultColorId() {
         return DEFAULT_COLOR;
     }
+
+    @Override
+    public void setTopicId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setDisplayTitle(String title) {
+        this.title = title;
+    }
 }

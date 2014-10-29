@@ -14,6 +14,10 @@ public class GenericTopic extends AbstractTopic {
         super();
     }
 
+    public GenericTopic(String id) {
+        this.setTopicId(id);
+    }
+
     @Override
     public List<TopicKeys> getTopicKeys() {
         return null;
@@ -21,7 +25,7 @@ public class GenericTopic extends AbstractTopic {
 
     @Override
     public String getTopicId() {
-        return "generic";
+        return id;
     }
 
     @Override

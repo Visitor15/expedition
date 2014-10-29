@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import forged.expedition.Expedition;
 import forged.expedition.R;
 import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
+import forged.expedition.topics.GenericTopic;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -98,15 +100,26 @@ public class TopicFragment extends Fragment {
 
     private void initGridView() {
         if(gridAdapter == null) {
-            gridAdapter = new GridAdapter(Arrays.asList(getResources().getStringArray(R.array.default_topics)));
+
+            List<GenericTopic> rootTopicList = new ArrayList<GenericTopic>();
+            List<String> stringList = Arrays.asList(getResources().getStringArray(R.array.default_topics));
+
+            for(String s : stringList) {
+                String[] splitStr = s.split("#");
+                GenericTopic genTopic = new GenericTopic(splitStr[1]);
+                genTopic.setDisplayTitle(splitStr[0]);
+                rootTopicList.add(genTopic);
+            }
+
+            gridAdapter = new GridAdapter(rootTopicList);
             topicGrid.setAdapter(gridAdapter);
             topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                    khanController.getTopicsByTopicName(((GridAdapter) topicGrid.getAdapter()).getItem(position).toString(), new DataCallback() {
+                    khanController.getTopicsByTopicName(((GenericTopic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
                         @Override
                         public void receiveResults(List results) {
-                            Toast.makeText(Expedition.getReference(), "Got " + ((GridAdapter) topicGrid.getAdapter()).getItem(position) + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Expedition.getReference(), "Got " + ((GenericTopic)((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
                             gridAdapter.setItemList(results);
                             gridAdapter.notifyDataSetChanged();
                         }
