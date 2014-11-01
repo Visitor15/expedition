@@ -167,7 +167,7 @@ public class NetworkService extends BasicService {
             Bundle b = msg.getData();
 
             String requestUrl = b.getString(NetworkService.REQUEST_URL);
-    //        Class requestTypeClass = getClassLoader().loadClass(b.getString(NetworkService.REQUEST_TYPE));
+//            Class requestTypeClass = getClassLoader().loadClass(b.getString(NetworkService.REQUEST_TYPE));
 
 
 
@@ -180,60 +180,51 @@ public class NetworkService extends BasicService {
             String response = httpConnector.postForResponse(requestUrl);
 
 
-            JSONObject obj = null;
+//            JSONObject obj = null;
+//
+//
+//            obj = new JSONObject(response);
+//
+//
+//            JSONArray metaDataArray = obj.getJSONArray("child_data");
+//            JSONArray testArray = obj.getJSONArray("children");
+//
+//            response = "";
+//
+//            for(int i = 0; i < metaDataArray.length(); i++) {
+//                List<MetaChildData> metaChildData = gson.fromJson(metaDataArray.toString(), new TypeToken<List<MetaChildData>>() {
+//                }.getType());
+//
+//                if(metaChildData.size() == 1) {
+//                    if (metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
+//                        topicList.add((Topic) gson.fromJson(testArray.toString(), new TypeToken<VideoTopic>() {
+//                        }.getType()));
+//                    } else {
+//                        topicList.add((Topic) gson.fromJson(testArray.toString(), new TypeToken<GenericTopic>() {
+//                        }.getType()));
+//                    }
+//                }
+//                else if (metaChildData.size() > 1) {
+//                    if (metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
+//                        topicList.addAll((List<Topic>) gson.fromJson(testArray.toString(), new TypeToken<List<VideoTopic>>() {
+//                        }.getType()));
+//                    } else {
+//                        topicList.addAll((List<Topic>) gson.fromJson(testArray.toString(), new TypeToken<List<GenericTopic>>() {
+//                        }.getType()));
+//                    }
+//                }
+//            }
 
-
-                obj = new JSONObject(response);
-
-
-            JSONArray metaDataArray = obj.getJSONArray("child_data");
-            JSONArray testArray = obj.getJSONArray("children");
-
-            response = "";
-
-            for(int i = 0; i < metaDataArray.length(); i++) {
-                List<MetaChildData> metaChildData = gson.fromJson(metaDataArray.toString(), new TypeToken<List<MetaChildData>>() {
-                }.getType());
-
-                if(metaChildData.size() == 1) {
-                    if (metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
-                        topicList.add((Topic) gson.fromJson(testArray.toString(), new TypeToken<VideoTopic>() {
-                        }.getType()));
-                    } else {
-                        topicList.add((Topic) gson.fromJson(testArray.toString(), new TypeToken<GenericTopic>() {
-                        }.getType()));
-                    }
-                }
-                else if (metaChildData.size() > 1) {
-                    if (metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
-                        topicList.addAll((List<Topic>) gson.fromJson(testArray.toString(), new TypeToken<List<VideoTopic>>() {
-                        }.getType()));
-                    } else {
-                        topicList.addAll((List<Topic>) gson.fromJson(testArray.toString(), new TypeToken<List<GenericTopic>>() {
-                        }.getType()));
-                    }
-                }
-            }
-
-            msg.what = NetworkServiceConnection.REQUEST_SUCCESS;
+            msg.what = NetworkService.REQUEST_SUCCESS;
+            msg.getData().putString(NetworkService.RESPONSE_DATA, response);
             msg.replyTo.send(Message.obtain(msg));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-            sendFailedRequest(Message.obtain(msg), e.getMessage());
-        } catch (RemoteException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            msg.what = NetworkServiceConnection.REQUEST_SUCCESS;
+            msg.what = NetworkService.REQUEST_SUCCESS;
             msg.getData().putString(NetworkService.RESPONSE_DATA, gson.toJson(topicList, new TypeToken<List<GenericTopic>>() {
             }.getType()));
 
-            try {
-                msg.replyTo.send(Message.obtain(msg));
-            } catch (RemoteException e1) {
-                e1.printStackTrace();
-            }
+            msg.getTarget().sendMessage(Message.obtain(msg));
         }
     }
 

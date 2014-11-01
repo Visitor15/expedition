@@ -143,4 +143,9 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     public boolean isVideoTopic() {
         return kind.equalsIgnoreCase("video");
     }
+
+    @Override
+    public String getYouTubeId() {
+        return "";
+    }
 }

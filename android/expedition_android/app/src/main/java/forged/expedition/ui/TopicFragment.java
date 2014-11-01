@@ -1,6 +1,8 @@
 package forged.expedition.ui;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.topics.GenericTopic;
 import forged.expedition.topics.Topic;
+import forged.expedition.topics.VideoTopic;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -48,7 +51,7 @@ public class TopicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.topic_fragment, container);
+        rootView = inflater.inflate(R.layout.topic_fragment, container, false);
 
         topicGrid = (GridView) rootView.findViewById(R.id.gridView);
 
@@ -102,7 +105,7 @@ public class TopicFragment extends Fragment {
             List<GenericTopic> rootTopicList = new ArrayList<GenericTopic>();
             List<String> stringList = Arrays.asList(getResources().getStringArray(R.array.default_topics));
 
-            for(String s : stringList) {
+            for (String s : stringList) {
                 String[] splitStr = s.split("#");
                 GenericTopic genTopic = new GenericTopic(splitStr[1]);
                 genTopic.setDisplayTitle(splitStr[0]);
@@ -110,43 +113,61 @@ public class TopicFragment extends Fragment {
             }
 
             gridAdapter = new GridAdapter(rootTopicList);
-            topicGrid.setAdapter(gridAdapter);
-            topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        }
+        topicGrid.setAdapter(gridAdapter);
+        topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                    khanController.getAll(new DataCallback() {
+                final Topic currentTopic = (Topic) topicGrid.getAdapter().getItem(position);
+
+                if(currentTopic.isVideoTopic()) {
+                    khanController.getVideoTopicsForTopic(currentTopic.getTopicId(), new DataCallback<VideoTopic>() {
                         @Override
-                        public void receiveResults(List results) {
-                            Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
-                            gridAdapter.setItemList(results);
-                            gridAdapter.notifyDataSetChanged();
+                        public void receiveResults(List<VideoTopic> results) {
+                            YouTubePlayer youTubeFragment = new YouTubePlayer();
+                            youTubeFragment.addTopic(results.get(0));
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.replace(R.id.banner_fragment, youTubeFragment); // f1_container is your FrameLayout container
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.addToBackStack(null);
+                            ft.commit();
                         }
                     });
-
-//                    if(((Topic) topicGrid.getAdapter().getItem(position)).isVideoTopic()) {
-//                        khanController.getVideoTopicsForTopic(((Topic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
-//                            @Override
-//                            public void receiveResults(List results) {
-//                                Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
-//                                gridAdapter.setItemList(results);
-//                                gridAdapter.notifyDataSetChanged();
-//                            }
-//                        });
-//                    }
-//                    else {
-//
-//                        khanController.getTopicsByTopicName(((Topic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
-//                            @Override
-//                            public void receiveResults(List results) {
-//                                Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
-//                                gridAdapter.setItemList(results);
-//                                gridAdapter.notifyDataSetChanged();
-//                            }
-//                        });
-//                    }
                 }
-            });
+                else {
+                    khanController.getTopicsByTopicName(currentTopic.getTopicId(), new DataCallback() {
+                        @Override
+                        public void receiveResults(List results) {
+                            if (results.size() > 0) {
+
+                                TopicFragment topicFragment = new TopicFragment();
+                                topicFragment.addTopics(results);
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+
+//                                    Toast.makeText(Expedition.getReference(), "Got " + currentTopic.getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+//                                    gridAdapter.setItemList(results);
+//                                    gridAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+    public void addTopics(List<Topic> topicList) {
+        if(gridAdapter != null) {
+            gridAdapter.addToList(topicList);
+            gridAdapter.notifyDataSetChanged();
+        }
+        else {
+            gridAdapter = new GridAdapter(topicList);
         }
     }
 

@@ -14,17 +14,27 @@ android:background="@color/Bismark">
     <!--android:layout_marginLeft="16dip"-->
     <!--android:id="@+id/gridView" />-->
 
+
+
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="forged.expedition.ui.TopicFragment"
         android:id="@+id/topic_fragment" />
 
-<fragment
-    android:layout_width="fill_parent"
-    android:layout_height="64dip"
-    android:name="forged.expedition.ui.BannerFragment"
-    android:id="@+id/fragment"
-    android:layout_alignParentTop="true" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="96dip"
+        android:id="@+id/banner_fragment"
+        android:layout_alignParentTop="true" />
+
+<!--<fragment-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="64dip"-->
+    <!--android:name="forged.expedition.ui.BannerFragment"-->
+    <!--android:id="@+id/banner_fragment"-->
+    <!--android:layout_alignParentTop="true" />-->
+
+
 
 </RelativeLayout>

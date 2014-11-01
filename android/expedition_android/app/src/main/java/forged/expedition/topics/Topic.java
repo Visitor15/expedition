@@ -19,4 +19,6 @@ public interface Topic<T> extends JsonData<T> {
 
     public boolean isVideoTopic();
 
+    public String getYouTubeId();
+
 }

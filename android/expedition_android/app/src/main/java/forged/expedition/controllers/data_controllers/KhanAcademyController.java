@@ -79,12 +79,20 @@ public class KhanAcademyController extends BaseController {
     }
 
     private void createRequestWithUrlForAsyncResponse(String url, final Type type, final DataCallback callback) {
-        networkServiceConnection.sendRequestForResponse(url, new ControllerCallback() {
+
+        networkServiceConnection.sendRequestCommand(url, type.getClass(), NetworkService.RequestCommand.ACCEPT_PARSE_JSON_RESPONSE, new ControllerCallback() {
             @Override
             public void handleCallback(Bundle b) {
                 callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), type));
             }
         });
+
+//        networkServiceConnection.sendRequestForResponse(url, new ControllerCallback() {
+//            @Override
+//            public void handleCallback(Bundle b) {
+//                callback.receiveResults(convertJsonToTopic(b.getString(NetworkService.RESPONSE_DATA), type));
+//            }
+//        });
     }
 
     private void createTopicTreeUrlRequestAsync(final DataCallback callback) {
@@ -218,14 +226,15 @@ public class KhanAcademyController extends BaseController {
         try {
             obj = new JSONObject(jsonStr);
 
-
-
-            JSONArray metaDataArray = obj.getJSONArray("child_data");
+            JSONArray childMetaData = obj.getJSONArray("child_data");
             JSONArray testArray = obj.getJSONArray("children");
-            List<MetaChildData> metaChildData = gson.fromJson(metaDataArray.toString(), new TypeToken<List<MetaChildData>>() {
-            }.getType());
 
-            if(metaChildData.size() > 0) {
+
+            if(childMetaData.length() > 0) {
+
+                List<MetaChildData> metaChildData = gson.fromJson(childMetaData.toString(), new TypeToken<List<MetaChildData>>() {
+                }.getType());
+
                 if(metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
                     return gson.fromJson(testArray.toString(), new TypeToken<List<VideoTopic>>() {
                     }.getType());
@@ -234,6 +243,24 @@ public class KhanAcademyController extends BaseController {
                     return gson.fromJson(testArray.toString(), type);
                 }
             }
+
+
+            return gson.fromJson(testArray.toString(), type);
+
+//            JSONArray metaDataArray = obj.getJSONArray("child_data");
+//            JSONArray testArray = jsonResults.getJSONArray(jsonResults.);
+//            List<MetaChildData> metaChildData = gson.fromJson(metaDataArray.toString(), new TypeToken<List<MetaChildData>>() {
+//            }.getType());
+//
+//            if(metaChildData.size() > 0) {
+//                if(metaChildData.get(0).getKind().equalsIgnoreCase("video")) {
+//                    return gson.fromJson(testArray.toString(), new TypeToken<List<VideoTopic>>() {
+//                    }.getType());
+//                }
+//                else {
+//                    return gson.fromJson(testArray.toString(), type);
+//                }
+//            }
 
 
 //            if(((JSONObject) testArray.get(0)).getString("kind").equalsIgnoreCase("Video") &&

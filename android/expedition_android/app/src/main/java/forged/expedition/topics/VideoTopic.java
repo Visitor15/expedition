@@ -2,6 +2,7 @@ package forged.expedition.topics;
 
 import com.google.gson.annotations.SerializedName;
 
+import forged.expedition.R;
 import forged.expedition.data.YouTubeDownloadUrl;
 
 /**
@@ -20,6 +21,11 @@ public class VideoTopic extends GenericTopic {
     public VideoTopic() {
 
     }
+
+    @Override
+    public int getDefaultColorId() {
+        return R.color.half_baked;
+}
 
     public String getTranslatedYouTubeID() {
         return translated_youtube_id;
@@ -47,5 +53,10 @@ public class VideoTopic extends GenericTopic {
 
     public Boolean hasDownloadUrls() {
         return download_urls != null;
+    }
+
+    @Override
+    public String getYouTubeId() {
+        return getTranslatedYouTubeID();
     }
 }
