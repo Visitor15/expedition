@@ -11,98 +11,98 @@ import java.util.List;
 public abstract class AbstractTopic<T> implements Topic<T> {
 
     @SerializedName("author_key")
-    protected String author_key = "";
+    public String author_key = "";
 
     @SerializedName("children")
-    protected String children = "";
+    public String children = "";
 
     @SerializedName("child_data")
-    protected String child_data = "";
+    public String child_data = "";
 
     @SerializedName("creation_date")
-    protected String creation_date = "";
+    public String creation_date = "";
 
     @SerializedName("description")
-    protected String description = "";
+    public String description = "";
 
     @SerializedName("domain_slug")
-    protected String domain_slug = "";
+    public String domain_slug = "";
 
     @SerializedName("do_not_publish")
-    protected String do_not_publish = "";
+    public String do_not_publish = "";
 
     @SerializedName("edit_slug")
-    protected String edit_slug = "";
+    public String edit_slug = "";
 
     @SerializedName("extended_slug")
-    protected String extended_slug = "";
+    public String extended_slug = "";
 
     @SerializedName("gplus_url")
-    protected String gplus_url = "";
+    public String gplus_url = "";
 
     @SerializedName("has_user_authored_content_types")
-    protected String has_user_authored_content_types = "";
+    public String has_user_authored_content_types = "";
 
     @SerializedName("hide")
-    protected String hide = "";
+    public String hide = "";
 
     @SerializedName("icon_src")
-    protected String icon_src = "";
+    public String icon_src = "";
 
     @SerializedName("id")
-    protected String id = "";
+    public String id = "";
 
     @SerializedName("internal_id")
-    protected String internal_id = "";
+    public String internal_id = "";
 
     @SerializedName("slug")
-    protected String slug = "";
+    public String slug = "";
 
     @SerializedName("ka_url")
-    protected String ka_url = "";
+    public String ka_url = "";
 
     @SerializedName("key")
-    protected String key = "";
+    public String key = "";
 
     @SerializedName("kind")
-    protected String kind = "";
+    public String kind = "";
 
     @SerializedName("node_slug")
-    protected String node_slug = "";
+    public String node_slug = "";
 
     @SerializedName("old_key_name")
-    protected String old_key_name = "";
+    public String old_key_name = "";
 
     @SerializedName("relative_url")
-    protected String relative_url = "";
+    public String relative_url = "";
 
     @SerializedName("standalone_title")
-    protected String standalone_title = "";
+    public String standalone_title = "";
 
     @SerializedName("tags")
-    protected String tags = "";
+    public String tags = "";
 
     @SerializedName("title")
-    protected String title = "";
+    public String title = "";
 
     @SerializedName("topics_page_url")
-    protected String topics_page_url = "";
+    public String topics_page_url = "";
 
     @SerializedName("translated_title")
-    protected String translated_title = "";
+    public String translated_title = "";
 
     @SerializedName("translated_standalone_title")
-    protected String translated_standalone_title = "";
+    public String translated_standalone_title = "";
 
     @SerializedName("url")
-    protected String url = "";
+    public String url = "";
 
     @SerializedName("web_url")
-    protected String web_url = "";
+    public String web_url = "";
 
-    protected List<Topic> childTopics;
+    public List<Topic> childTopics;
 
-    protected List<TopicKeys> topicKeys;
+    public List<TopicKeys> topicKeys;
 
     public AbstractTopic() {};
 
@@ -137,5 +137,10 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     @Override
     public void setDisplayTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean isVideoTopic() {
+        return kind.equalsIgnoreCase("video");
     }
 }

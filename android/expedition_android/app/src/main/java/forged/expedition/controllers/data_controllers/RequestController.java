@@ -67,7 +67,7 @@ public class RequestController extends BaseController {
 //    }
 
     @Override
-    public void onHandleGenericCallback(Bundle b) {
+    public void onRequestSuccess(Bundle b) {
         System.out.println("Got bundle: " + b);
         if(b.containsKey("callback_data")) {
             isBound = true;
@@ -78,5 +78,10 @@ public class RequestController extends BaseController {
             String response = b.getString(NetworkService.REQUEST_DATA);
             System.out.println("GOT RESPONSE: " + response);
         }
+    }
+
+    @Override
+    public void onRequestFailure(Bundle b) {
+
     }
 }

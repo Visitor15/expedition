@@ -17,11 +17,17 @@ public class KhanAcademy {
 
     public static final String SPECIFIC_TOPIC_URL = BASE_URL.concat("/api/v1/topic");
 
+    public static final String SPECIFIC_VIDEO_TOPIC_URL = BASE_URL.concat("/api/v1/videos");
+
     public static String getTopicUrl(Topic t) {
         return SPECIFIC_TOPIC_URL.concat("/").concat(t.getTopicId());
     }
 
     public static String getTopicUrl(String topicId) {
         return SPECIFIC_TOPIC_URL.concat("/").concat(topicId);
+    }
+
+    public static String getVideoTopicUrl(String topicId) {
+        return SPECIFIC_VIDEO_TOPIC_URL.concat("/").concat(topicId);
     }
 }

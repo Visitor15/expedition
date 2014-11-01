@@ -7,8 +7,7 @@ import android.os.Message;
  * Created by visitor15 on 9/30/14.
  */
 public interface GenericCallback {
+    public void onRequestSuccess(Bundle b);
 
-    public void onHandleGenericCallback(Message msg);
-
-    public void onHandleGenericCallback(Bundle b);
+    public void onRequestFailure(Bundle b);
 }

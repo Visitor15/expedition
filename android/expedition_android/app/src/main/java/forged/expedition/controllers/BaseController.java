@@ -34,30 +34,30 @@ public abstract class BaseController implements GenericCallback {
 //    public void onHandleAsyncCallback(int arg1, int arg2, Message msg) {
 //
 //    }
-    @Override
-    public void onHandleGenericCallback(Message msg) {
-
-
-        switch(msg.what) {
-            case BasicService.SERVICE_CONNECTED: {
-                onServiceConnected();
-                break;
-            }
-            case BasicService.SERVICE_DISCONNECTED: {
-                onServiceDisconnected();
-                break;
-            }
-            case BasicService.SERVICE_REQUEST_ERROR: {
-                onServiceRequestError();
-                break;
-            }
-            case BasicService.DELIVER_RESULTS: {
-                onDeliverResults();
-            }
-        }
-
-
-    }
+//    @Override
+//    public void onHandleGenericCallback(Message msg) {
+//
+//
+//        switch(msg.what) {
+//            case BasicService.SERVICE_CONNECTED: {
+//                onServiceConnected();
+//                break;
+//            }
+//            case BasicService.SERVICE_DISCONNECTED: {
+//                onServiceDisconnected();
+//                break;
+//            }
+//            case BasicService.SERVICE_REQUEST_ERROR: {
+//                onServiceRequestError();
+//                break;
+//            }
+//            case BasicService.DELIVER_RESULTS: {
+//                onDeliverResults();
+//            }
+//        }
+//
+//
+//    }
 
     public abstract void onServiceConnected();
 

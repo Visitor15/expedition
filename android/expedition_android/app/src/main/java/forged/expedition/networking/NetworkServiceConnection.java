@@ -29,6 +29,8 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
 
     public static final int REQUEST_ERROR = 300;
 
+    public static final String RESPONSE_DATA = "response_data";
+
     private NetworkService mService;
 
     private boolean isBound;
@@ -51,7 +53,7 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
         mMessenger = new Messenger(iBinder);
         isBound = true;
 
-        callback(Message.obtain(null, SERVICE_CONNECTED));
+//        callback(Message.obtain(null, SERVICE_CONNECTED));
 //        Bundle b = new Bundle();
 //        b.putInt(SERVICE_RESPONSE, SERVICE_CONNECTED);
 //        doCallback(b);
@@ -63,12 +65,16 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
         mService = null;
     }
 
-    private void callback(Message msg) {
-        mCallback.onHandleGenericCallback(msg);
-    }
+//    private void callback(Message msg) {
+//        mCallback.onHandleGenericCallback(msg);
+//    }
 
     private void doCallback(Bundle b) {
-        mCallback.onHandleGenericCallback(b);
+        mCallback.onRequestSuccess(b);
+    }
+
+    private void doErrorCallback(Bundle b) {
+        mCallback.onRequestFailure(b);
     }
 
     public void sendRequestForResponse(String url, ControllerCallback callback) {
@@ -82,6 +88,24 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
             mMessenger.send(msg);
         } catch (RemoteException e) {
             throw new RuntimeException("Error creating request.", e);
+        }
+    }
+
+    public void sendRequestCommand(String url, Class type, NetworkService.RequestCommand command, ControllerCallback callback) {
+        Bundle b = new Bundle();
+        b.putSerializable("callback", callback);
+        b.putString(NetworkService.REQUEST_TYPE, type.toString());
+        b.putString(NetworkService.COMMAND_DATA, command.name());
+        b.putString(NetworkService.REQUEST_URL, url);
+
+        Message msg = obtainNewRequestMessage();
+        msg.what = NetworkService.SEND_COMMAND_REQUEST;
+        msg.setData(b);
+
+        try {
+            mMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,14 +125,15 @@ public class NetworkServiceConnection extends GenericAsyncCallback implements Se
 
     private void onHandleMessage(Message msg) {
         switch(msg.what) {
-            case REQUEST_SUCCESS: {
+            case NetworkService.REQUEST_SUCCESS: {
                 doCallback(msg.getData());
                 break;
             }
-            case REQUEST_FAILURE: {
+            case NetworkService.REQUEST_FAILURE: {
+                doErrorCallback(msg.getData());
                 break;
             }
-            case REQUEST_ERROR: {
+            case NetworkService.REQUEST_ERROR: {
                 break;
             }
             default: {

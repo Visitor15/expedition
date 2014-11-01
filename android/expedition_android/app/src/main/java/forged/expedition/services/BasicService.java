@@ -41,9 +41,15 @@ public abstract class BasicService extends Service {
 
     public BasicService() {}
 
-    protected abstract void onHandleMessage(final Message msg);
+    protected abstract void onHandleServiceMessage(final Message msg);
 
     protected abstract void onHandleWorkerMessage(final Message msg);
+
+    protected void killCurrentWorkerThread() {
+        if(Thread.currentThread() instanceof HandlerThread) {
+            ((HandlerThread) Thread.currentThread()).quit();
+        }
+    }
 
     @Override
     public abstract void onDestroy();
@@ -105,7 +111,10 @@ public abstract class BasicService extends Service {
         @Override
         public void handleMessage(Message msg) {
             synchronized (this) {
-                onHandleMessage(msg);
+
+
+
+                onHandleServiceMessage(msg);
             }
         }
     }

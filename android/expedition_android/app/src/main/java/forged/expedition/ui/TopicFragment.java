@@ -114,14 +114,37 @@ public class TopicFragment extends Fragment {
             topicGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                    khanController.getTopicsByTopicName(((GenericTopic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
+
+                    khanController.getAll(new DataCallback() {
                         @Override
                         public void receiveResults(List results) {
-                            Toast.makeText(Expedition.getReference(), "Got " + ((GenericTopic)((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
                             gridAdapter.setItemList(results);
                             gridAdapter.notifyDataSetChanged();
                         }
                     });
+
+//                    if(((Topic) topicGrid.getAdapter().getItem(position)).isVideoTopic()) {
+//                        khanController.getVideoTopicsForTopic(((Topic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
+//                            @Override
+//                            public void receiveResults(List results) {
+//                                Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+//                                gridAdapter.setItemList(results);
+//                                gridAdapter.notifyDataSetChanged();
+//                            }
+//                        });
+//                    }
+//                    else {
+//
+//                        khanController.getTopicsByTopicName(((Topic) topicGrid.getAdapter().getItem(position)).getTopicId(), new DataCallback() {
+//                            @Override
+//                            public void receiveResults(List results) {
+//                                Toast.makeText(Expedition.getReference(), "Got " + ((Topic) ((GridAdapter) topicGrid.getAdapter()).getItem(position)).getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
+//                                gridAdapter.setItemList(results);
+//                                gridAdapter.notifyDataSetChanged();
+//                            }
+//                        });
+//                    }
                 }
             });
         }
@@ -140,7 +163,7 @@ public class TopicFragment extends Fragment {
             }
 
             ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).toString());
-            ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(((GenericTopic) getItemList().get(position)).getDefaultColorId());
+            ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(((Topic) getItemList().get(position)).getDefaultColorId());
 
             return convertView;
         }
