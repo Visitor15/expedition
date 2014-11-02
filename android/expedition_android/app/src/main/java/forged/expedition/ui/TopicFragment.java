@@ -159,7 +159,7 @@ public class TopicFragment extends Fragment {
                                     topicFragment.addTopics(results);
                                     FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
                                     ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
-                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                     ft.addToBackStack(null);
                                     ft.commit();
                                 } catch (NullPointerException e) {

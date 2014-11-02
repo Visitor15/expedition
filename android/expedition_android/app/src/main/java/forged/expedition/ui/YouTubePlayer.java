@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
+import forged.expedition.Expedition;
 import forged.expedition.R;
 import forged.expedition.topics.Topic;
 import forged.expedition.util.Utils;
@@ -19,7 +20,7 @@ import forged.expedition.util.Utils;
 /**
  * Created by nchampagne on 10/28/14.
  */
-public class YouTubePlayer extends Fragment{
+public class YouTubePlayer extends Fragment {
 
     Topic topic;
 
@@ -37,21 +38,8 @@ public class YouTubePlayer extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-//        initialize("", new com.google.android.youtube.player.YouTubePlayer.OnInitializedListener() {
-//
-//
-//            @Override
-//            public void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer.Provider provider, com.google.android.youtube.player.YouTubePlayer youTubePlayer, boolean b) {
-//                YouTubePlayer.this.provider = provider;
-//                YouTubePlayer.this.youTubePlayer = youTubePlayer;
-//            }
-//
-//            @Override
-//            public void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//
-//            }
-//        });
+
+
     }
 
     @Override
@@ -61,16 +49,35 @@ public class YouTubePlayer extends Fragment{
         return rootView;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
 
-//        youTubePlayer.cueVideo(topic.getYouTubeId());
+        youTubePlayerFragment = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+
+        youTubePlayerFragment.initialize("AIzaSyBbIP4truKygm4nSWphhKEftv69glq3FDY", new com.google.android.youtube.player.YouTubePlayer.OnInitializedListener() {
+
+
+            @Override
+            public void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer.Provider provider, com.google.android.youtube.player.YouTubePlayer youTubePlayer, boolean wasRestored) {
+                YouTubePlayer.this.provider = provider;
+                YouTubePlayer.this.youTubePlayer = youTubePlayer;
+
+                if (!wasRestored) {
+                    youTubePlayer.cueVideo(topic.getYouTubeId());
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                youTubeInitializationResult.getErrorDialog(getActivity(), 0);
+            }
+        });
     }
 
     @Override
@@ -105,6 +112,10 @@ public class YouTubePlayer extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
+        YouTubePlayerFragment f = (YouTubePlayerFragment) getFragmentManager()
+                .findFragmentById(R.id.youtube_fragment);
+        if (f != null)
+            getFragmentManager().beginTransaction().remove(f).commit();
     }
 
     @Override
