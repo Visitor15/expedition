@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import forged.expedition.controllers.data_controllers.KhanAcademyController;
 import forged.expedition.topics.GenericTopic;
 import forged.expedition.topics.Topic;
 import forged.expedition.topics.VideoTopic;
+import forged.expedition.util.Utils;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -50,10 +52,11 @@ public class TopicFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.topic_fragment, container, false);
 
         topicGrid = (GridView) rootView.findViewById(R.id.gridView);
+
+
 
         return rootView;
     }
@@ -66,6 +69,7 @@ public class TopicFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         initGridView();
     }
 
@@ -76,7 +80,16 @@ public class TopicFragment extends Fragment {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+        switch(getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE: {
+                topicGrid.setNumColumns(2);
+                break;
+            }
+            case Configuration.ORIENTATION_PORTRAIT: {
+                topicGrid.setNumColumns(1);
+                break;
+            }
+        }
     }
 
     @Override
@@ -141,17 +154,17 @@ public class TopicFragment extends Fragment {
                         public void receiveResults(List results) {
                             if (results.size() > 0) {
 
-                                TopicFragment topicFragment = new TopicFragment();
-                                topicFragment.addTopics(results);
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
-                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                                ft.addToBackStack(null);
-                                ft.commit();
+                                try {
+                                    TopicFragment topicFragment = new TopicFragment();
+                                    topicFragment.addTopics(results);
+                                    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                                    ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
+                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                    ft.addToBackStack(null);
+                                    ft.commit();
+                                } catch (NullPointerException e) {
 
-//                                    Toast.makeText(Expedition.getReference(), "Got " + currentTopic.getDisplayName() + " topic: " + results.size(), Toast.LENGTH_LONG).show();
-//                                    gridAdapter.setItemList(results);
-//                                    gridAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     });
@@ -159,6 +172,16 @@ public class TopicFragment extends Fragment {
             }
         });
 
+        switch(getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE: {
+                topicGrid.setNumColumns(2);
+                break;
+            }
+            case Configuration.ORIENTATION_PORTRAIT: {
+                topicGrid.setNumColumns(1);
+                break;
+            }
+        }
     }
 
     public void addTopics(List<Topic> topicList) {
@@ -173,18 +196,39 @@ public class TopicFragment extends Fragment {
 
     public class GridAdapter extends GenericListAdapter {
 
+        int pixels = 0;
+
         public GridAdapter(List dataList) {
             super(dataList);
+
+
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            pixels = Utils.dipsToPixels(getActivity(), 4);
+
             if(convertView == null) {
-                convertView = mInflater.inflate(R.layout.topic_item_card, parent, false);
+                convertView = mInflater.inflate(R.layout.subject_item, parent, false);
             }
 
             ((TextView) convertView.findViewById(R.id.textView_title)).setText(getItemList().get(position).toString());
             ((CircularImageView) convertView.findViewById(R.id.circularImageView_icon)).setColor(((Topic) getItemList().get(position)).getDefaultColorId());
+
+//            convertView.findViewById(R.id.top_shadow).setVisibility(View.GONE);
+//            ((LinearLayout.LayoutParams) convertView.findViewById(R.id.left_shadow).getLayoutParams()).setMargins(0, 0, 0, 0);
+//            ((LinearLayout.LayoutParams) convertView.findViewById(R.id.right_shadow).getLayoutParams()).setMargins(0, 0, 0, 0);
+//
+//
+//
+//            if(position == 0) {
+//                convertView.findViewById(R.id.top_shadow).setVisibility(View.VISIBLE);
+//                ((LinearLayout.LayoutParams) convertView.findViewById(R.id.left_shadow).getLayoutParams()).setMargins(0, pixels, 0, 0);
+//                ((LinearLayout.LayoutParams) convertView.findViewById(R.id.right_shadow).getLayoutParams()).setMargins(0, pixels, 0, 0);
+//            }
+//            else if(position == (getItemList().size() - 1)) {
+//                convertView.findViewById(R.id.bottom_shadow).setVisibility(View.VISIBLE);
+//            }
 
             return convertView;
         }

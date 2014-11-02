@@ -16,15 +16,14 @@ android:background="@color/Bismark">
 
 
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="forged.expedition.ui.TopicFragment"
         android:id="@+id/topic_fragment" />
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="96dip"
+        android:layout_height="wrap_content"
         android:id="@+id/banner_fragment"
         android:layout_alignParentTop="true" />
 

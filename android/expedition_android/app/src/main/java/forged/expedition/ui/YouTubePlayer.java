@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import forged.expedition.R;
 import forged.expedition.topics.Topic;
+import forged.expedition.util.Utils;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -53,8 +56,7 @@ public class YouTubePlayer extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.banner_fragment, container, false);
-        rootView.findViewById(R.id.container).setBackgroundResource(R.color.black_overlay);
+        rootView = inflater.inflate(R.layout.youtube_fragment, container, false);
 
         return rootView;
     }
@@ -78,7 +80,16 @@ public class YouTubePlayer extends Fragment{
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+        switch(getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE: {
+                rootView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                break;
+            }
+            case Configuration.ORIENTATION_PORTRAIT: {
+                rootView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, Utils.dipsToPixels(getActivity(), 192)));
+                break;
+            }
+        }
     }
 
     @Override

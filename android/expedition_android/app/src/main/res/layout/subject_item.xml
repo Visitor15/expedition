@@ -2,69 +2,95 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/container">
+    android:layout_height="80dip"
+    android:orientation="horizontal">
 
-    <FrameLayout
-        android:layout_width="4dip"
-        android:layout_height="fill_parent"
-        android:background="@drawable/left_shadow"/>
+    <!--<FrameLayout-->
+        <!--android:layout_width="4dip"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:id="@+id/left_shadow"-->
+        <!--android:background="@drawable/left_shadow"/>-->
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="80dip"
-        android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:background="@android:color/white">
+    <!--<LinearLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="80dip"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_weight="1">-->
 
-    <forged.expedition.ui.CircularImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="8dip"
-        android:id="@+id/circularImageView_icon" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="4dip"-->
+            <!--android:id="@+id/top_shadow"-->
+            <!--android:visibility="gone"-->
+            <!--android:background="@drawable/top_shadow"/>-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_toRightOf="@+id/circularImageView_icon"
-            android:textColor="#282828"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="24dip"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="Large Text"
-            android:id="@+id/textView_title" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/dialog_holo_light_frame">
+            android:id="@+id/container">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_below="@+id/textView_title"
-            android:layout_alignLeft="@+id/textView_title"
-            android:layout_marginRight="24dip"
-            android:maxLines="3"
-            android:text="Small Text"
-            android:id="@+id/textView_description" />
+            <forged.expedition.ui.CircularImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="8dip"
+                android:id="@+id/circularImageView_icon" />
 
-    <Spinner
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:id="@+id/spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:clickable="true"
-        android:layout_marginRight="4dip"
-        android:dropDownSelector="@null"
-        android:spinnerMode="dropdown"
-        android:background="@drawable/ic_action_hardware_keyboard_control" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_toRightOf="@+id/circularImageView_icon"
+                android:textColor="#282828"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="24dip"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Large Text"
+                android:id="@+id/textView_title" />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_below="@+id/textView_title"
+                android:layout_alignLeft="@+id/textView_title"
+                android:layout_marginRight="24dip"
+                android:maxLines="3"
+                android:text="Small Text"
+                android:id="@+id/textView_description" />
 
-    <FrameLayout
-        android:layout_width="4dip"
-        android:layout_height="fill_parent"
-        android:background="@drawable/right_shadow"/>
+            <Spinner
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/spinner"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:layout_marginRight="4dip"
+                android:dropDownSelector="@null"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/ic_action_hardware_keyboard_control" />
+        </RelativeLayout>
+
+
+
+        <!--<FrameLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="4dip"-->
+            <!--android:layout_below="@id/container"-->
+            <!--android:id="@+id/bottom_shadow"-->
+            <!--android:visibility="gone"-->
+            <!--android:background="@drawable/bottom_shadow"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="4dip"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:id="@+id/right_shadow"-->
+        <!--android:background="@drawable/right_shadow"/>-->
 
 </LinearLayout>
