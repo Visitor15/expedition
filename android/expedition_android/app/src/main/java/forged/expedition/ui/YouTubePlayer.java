@@ -1,21 +1,17 @@
 package forged.expedition.ui;
 
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import forged.expedition.Expedition;
 import forged.expedition.R;
 import forged.expedition.topics.Topic;
-import forged.expedition.util.Utils;
 
 /**
  * Created by nchampagne on 10/28/14.
@@ -35,30 +31,16 @@ public class YouTubePlayer extends Fragment {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
+    public void setCurrentTopic(Topic t) {
+        this.topic = t;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.youtube_fragment, container, false);
-
-        return rootView;
+    public void refreshYouTubePlayer() {
+        initYouTubePlayer();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        youTubePlayerFragment = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+    private void initYouTubePlayer() {
+        youTubePlayerFragment = (YouTubePlayerFragment) getActivity().getFragmentManager().findFragmentById(R.id.youtube_fragment);
 
         youTubePlayerFragment.initialize("AIzaSyBbIP4truKygm4nSWphhKEftv69glq3FDY", new com.google.android.youtube.player.YouTubePlayer.OnInitializedListener() {
 
@@ -81,22 +63,59 @@ public class YouTubePlayer extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.youtube_fragment, container, false);
+
+//        switch(getResources().getConfiguration().orientation) {
+//            case Configuration.ORIENTATION_LANDSCAPE: {
+//                rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+//                break;
+//            }
+//            case Configuration.ORIENTATION_PORTRAIT: {
+//                rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.2f));
+//                break;
+//            }
+//        }
+
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        initYouTubePlayer();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        switch(getResources().getConfiguration().orientation) {
-            case Configuration.ORIENTATION_LANDSCAPE: {
-                rootView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                break;
-            }
-            case Configuration.ORIENTATION_PORTRAIT: {
-                rootView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, Utils.dipsToPixels(getActivity(), 192)));
-                break;
-            }
-        }
+//        switch(getResources().getConfiguration().orientation) {
+//            case Configuration.ORIENTATION_LANDSCAPE: {
+//                rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+//                break;
+//            }
+//            case Configuration.ORIENTATION_PORTRAIT: {
+//                rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.3f));
+//                break;
+//            }
+//        }
     }
 
     @Override
@@ -112,18 +131,16 @@ public class YouTubePlayer extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        YouTubePlayerFragment f = (YouTubePlayerFragment) getFragmentManager()
+        YouTubePlayerFragment f = (YouTubePlayerFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.youtube_fragment);
         if (f != null)
-            getFragmentManager().beginTransaction().remove(f).commit();
+            getActivity().getFragmentManager().beginTransaction().remove(f).commit();
+
+        getActivity().findViewById(R.id.banner_fragment).setVisibility(View.GONE);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    public void addTopic(Topic t) {
-        this.topic = t;
     }
 }

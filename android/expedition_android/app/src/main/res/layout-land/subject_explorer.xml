@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical" android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/Bismark">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@color/Bismark">
 
-<!--<GridView-->
+    <!--<GridView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
     <!--android:clipToPadding="false"-->
@@ -14,6 +15,14 @@ android:background="@color/Bismark">
     <!--android:layout_marginLeft="16dip"-->
     <!--android:id="@+id/gridView" />-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:orientation="horizontal"
+        android:id="@+id/banner_fragment"
+        android:visibility="gone" />
+
 
 
     <FrameLayout
@@ -21,13 +30,9 @@ android:background="@color/Bismark">
         android:layout_height="match_parent"
         android:id="@+id/topic_fragment" />
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/banner_fragment"
-        android:layout_alignParentTop="true" />
 
-<!--<fragment-->
+
+    <!--<fragment-->
     <!--android:layout_width="fill_parent"-->
     <!--android:layout_height="64dip"-->
     <!--android:name="forged.expedition.ui.BannerFragment"-->
@@ -36,4 +41,4 @@ android:background="@color/Bismark">
 
 
 
-</RelativeLayout>
+</LinearLayout>

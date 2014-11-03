@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:weightSum="1"
+android:background="@color/Bismark">
+
+<!--<GridView-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:clipToPadding="false"-->
+<!--android:paddingTop="60dip"-->
+<!--android:layout_marginRight="16dip"-->
+<!--android:layout_marginLeft="16dip"-->
+<!--android:id="@+id/gridView" />-->
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0.6"
+    android:orientation="vertical"
+    android:id="@+id/banner_fragment"
+    android:visibility="gone"
+    android:layout_alignParentTop="true" />
+
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/topic_fragment" />
+
+
+
+<!--<fragment-->
+<!--android:layout_width="fill_parent"-->
+<!--android:layout_height="64dip"-->
+<!--android:name="forged.expedition.ui.BannerFragment"-->
+<!--android:id="@+id/banner_fragment"-->
+<!--android:layout_alignParentTop="true" />-->
+
+
+
+</LinearLayout>

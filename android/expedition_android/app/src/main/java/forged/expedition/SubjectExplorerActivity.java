@@ -1,28 +1,20 @@
 package forged.expedition;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.GridView;
-import android.widget.TextView;
 
-import java.util.List;
-
-import forged.expedition.controllers.DataCallback;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
-import forged.expedition.topics.Topic;
 import forged.expedition.ui.BannerFragment;
-import forged.expedition.ui.CircularImageView;
-import forged.expedition.ui.GenericListAdapter;
 import forged.expedition.ui.TopicFragment;
 
 /**
  * Created by visitor15 on 10/19/14.
  */
-public class SubjectExplorerActivity extends Activity {
+public class SubjectExplorerActivity extends FragmentActivity {
 
     private KhanAcademyController khanController;
 
@@ -143,10 +135,10 @@ public class SubjectExplorerActivity extends Activity {
         super.onResume();
 
         TopicFragment topicFragment = new TopicFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(null);
+//        ft.addToBackStack(null);
         ft.commit();
     }
 
