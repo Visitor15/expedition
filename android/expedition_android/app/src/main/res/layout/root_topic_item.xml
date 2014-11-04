@@ -15,6 +15,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:padding="8dip"
+            android:layout_centerVertical="true"
             android:id="@+id/circularImageView_icon" />
 
         <TextView
