@@ -3,34 +3,34 @@
 
     <array name="default_topics">
         <item>
-            "Math#math"
+            Math#forged.expedition.topics.MathTopic
         </item>
         <item>
-           "Science#science
+           Science#forged.expedition.topics.ScienceTopic
         </item>
         <item>
-            "Economics and finance#economics-finance-domain
+            Economics and finance#forged.expedition.topics.EconomicsAndFinanceTopic
         </item>
         <item>
-            "Arts and humanities#humanities
+            Arts and humanities#forged.expedition.topics.ArtsAndHumanitiesTopic
         </item>
         <item>
-            "Computing#computing"
+            Computing#forged.expedition.topics.ComputingTopic
         </item>
         <item>
-            "Test prep#test-prep
+            Test prep#forged.expedition.topics.TestPrepTopic
         </item>
         <item>
-            "Partner content#partner-content"
+            Partner content#forged.expedition.topics.PartnerContentTopic
         </item>
         <item>
-            "College admissions#college-admissions"
+            College admissions#forged.expedition.topics.CollegeAdmissionTopic
         </item>
         <item>
-            "Talks and interviews#talks-and-interviews"
+            Talks and interviews#forged.expedition.topics.TalksAndInterviewsTopic
         </item>
         <item>
-            "Coach and classroom resources#coach-res"
+            Coach and classroom resources#forged.expedition.topics.TalksAndInterviewsTopic
         </item>
     </array>
 
