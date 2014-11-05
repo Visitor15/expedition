@@ -118,7 +118,7 @@ public class TopicFragment extends Fragment {
         if(viewPagerAdapter == null) {
             viewPagerAdapter = new GenericViewPagerAdapter(getChildFragmentManager());
             mPager.setAdapter(viewPagerAdapter);
-            createDefaultView();
+//            createDefaultView();
         }
     }
 
@@ -154,7 +154,7 @@ public class TopicFragment extends Fragment {
         Topic t = (Topic) b.getSerializable(TopicKeys.TOPIC_KEY);
 
         if(t != null) {
-            viewPagerAdapter.addFragment(new TopicGridFragment(t, khanController, mPager));
+            viewPagerAdapter.resetFramentList(new TopicGridFragment(t, khanController, mPager));
         }
     }
 

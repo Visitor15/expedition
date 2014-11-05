@@ -24,7 +24,12 @@ public class GenericViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public void addFragment(Fragment fragment) {
         fragmentList.add(fragment);
+        notifyDataSetChanged();
+    }
 
+    public void addFragment(Fragment fragment, boolean setCurrent) {
+        fragmentList.add(fragment);
+        notifyDataSetChanged();
     }
 
     public List<Fragment> getFragmentList() {
