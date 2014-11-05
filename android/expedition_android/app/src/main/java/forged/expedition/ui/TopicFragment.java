@@ -1,5 +1,8 @@
 package forged.expedition.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,8 +18,11 @@ import java.util.List;
 import forged.expedition.Expedition;
 import forged.expedition.R;
 import forged.expedition.controllers.data_controllers.KhanAcademyController;
+import forged.expedition.events.LocalBroadcastReceiver;
+import forged.expedition.events.TopicSelectedEvent;
 import forged.expedition.topics.GenericTopic;
 import forged.expedition.topics.Topic;
+import forged.expedition.topics.TopicKeys;
 import forged.expedition.util.Utils;
 
 /**
@@ -36,26 +42,22 @@ public class TopicFragment extends Fragment {
 
     private KhanAcademyController khanController;
 
+    private TopicSelectedEventListener topicSelectedEventListener;
+
     public TopicFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         khanController = new KhanAcademyController();
+        topicSelectedEventListener = new TopicSelectedEventListener();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.topic_fragment, container, false);
-
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
-
-//        topicGrid = (GridView) rootView.findViewById(R.id.gridView);
-
-
-
         return rootView;
     }
 
@@ -67,10 +69,8 @@ public class TopicFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-//        initGridView();
-
         initViewPager();
+        topicSelectedEventListener.register();
     }
 
     @Override
@@ -96,6 +96,7 @@ public class TopicFragment extends Fragment {
     public void onPause() {
         super.onPause();
         this.getView().invalidate();
+        topicSelectedEventListener.unregister();
     }
 
     @Override
@@ -132,86 +133,8 @@ public class TopicFragment extends Fragment {
             rootTopicList.add(genTopic);
         }
 
-        viewPagerAdapter.resetFramentList(new TopicGridFragment(rootTopicList, khanController, mPager));
+        viewPagerAdapter.resetFramentList(new TopicGridFragment(khanController, mPager));
     }
-
-//    private void initGridView(GridView gridView) {
-//        if(gridAdapter == null) {
-//
-//            List<GenericTopic> rootTopicList = new ArrayList<GenericTopic>();
-//            List<String> stringList = Arrays.asList(getResources().getStringArray(R.array.default_topics));
-//
-//            for (String s : stringList) {
-//                String[] splitStr = s.split("#");
-//                GenericTopic genTopic = new GenericTopic(splitStr[1]);
-//                genTopic.setDisplayTitle(splitStr[0]);
-//                rootTopicList.add(genTopic);
-//            }
-//
-//            gridAdapter = new GridAdapter(rootTopicList);
-//        }
-//        gridView.setAdapter(gridAdapter);
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//
-//                final Topic currentTopic = (Topic) gridView.getAdapter().getItem(position);
-//
-//                if(currentTopic.isVideoTopic()) {
-//                    khanController.getVideoTopicsForTopic(currentTopic.getTopicId(), new DataCallback<VideoTopic>() {
-//                        @Override
-//                        public void receiveResults(List<VideoTopic> results) {
-//                            getActivity().findViewById(R.id.banner_fragment).setVisibility(View.VISIBLE);
-//                            YouTubePlayer youTubeFragment = new YouTubePlayer();
-//                            youTubeFragment.addTopic(results.get(0));
-//                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                            ft.replace(R.id.banner_fragment, youTubeFragment); // f1_container is your FrameLayout container
-//                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                            ft.addToBackStack(null);
-//                            ft.commit();
-//                        }
-//                    });
-//                }
-//                else {
-//                    khanController.getTopicsByTopicName(currentTopic.getTopicId(), new DataCallback() {
-//                        @Override
-//                        public void receiveResults(List results) {
-//                            if (results.size() > 0) {
-//
-//
-//                                ((GenericViewPagerAdapter) mPager.getAdapter()).addFragment(gridFragment, true);
-//
-//                                mPager.setCurrentItem();
-//
-//                                try {
-//                                    TopicFragment topicFragment = new TopicFragment();
-//                                    topicFragment.addTopics(results);
-//                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                    ft.replace(R.id.topic_fragment, topicFragment); // f1_container is your FrameLayout container
-//                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//                                    ft.addToBackStack(null);
-//                                    ft.commit();
-//                                } catch (NullPointerException e) {
-//
-//                                }
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//
-//        switch(getResources().getConfiguration().orientation) {
-//            case Configuration.ORIENTATION_LANDSCAPE: {
-//                gridView.setNumColumns(2);
-//                break;
-//            }
-//            case Configuration.ORIENTATION_PORTRAIT: {
-//                gridView.setNumColumns(1);
-//                break;
-//            }
-//        }
-//    }
 
     public void addTopics(List<Topic> topicList) {
         if(gridAdapter != null) {
@@ -223,8 +146,32 @@ public class TopicFragment extends Fragment {
         }
     }
 
-    public static class GridAdapter extends GenericListAdapter {
+    private void onHandleTopicSelectedEvent(Bundle b) {
+        if(!b.containsKey(TopicSelectedEvent.ACTION_TOPIC_SELECTED) && !b.containsKey(TopicKeys.TOPIC_KEY)) {
+            return;
+        }
 
+        Topic t = (Topic) b.getSerializable(TopicKeys.TOPIC_KEY);
+
+        if(t != null) {
+            viewPagerAdapter.addFragment(new TopicGridFragment(t, khanController, mPager));
+        }
+    }
+
+    public class TopicSelectedEventListener extends LocalBroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onHandleTopicSelectedEvent(intent.getExtras());
+        }
+
+        @Override
+        public IntentFilter createFilter() {
+            return new IntentFilter(TopicSelectedEvent.ACTION_TOPIC_SELECTED);
+        }
+    }
+
+    public static class GridAdapter extends GenericListAdapter {
         int pixels = 0;
 
         public GridAdapter(List dataList) {
@@ -248,7 +195,4 @@ public class TopicFragment extends Fragment {
             return convertView;
         }
     }
-
-
-
 }

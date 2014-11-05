@@ -25,11 +25,20 @@ public class TopicGridFragment extends Fragment {
 
     TopicFragment.GridAdapter gridAdapter;
 
+    GridView gridView;
+
     KhanAcademyController khanController;
+
+    private View rootView;
 
     private ViewPager mPager;
 
     public TopicGridFragment() {
+    }
+
+    public TopicGridFragment(KhanAcademyController khanController, ViewPager mPager) {
+        this.khanController = khanController;
+        this.mPager = mPager;
     }
 
     public TopicGridFragment(List<Topic> topicList, KhanAcademyController khanController, ViewPager mPager) {
@@ -38,6 +47,12 @@ public class TopicGridFragment extends Fragment {
         this.mPager = mPager;
     }
 
+    public TopicGridFragment(Topic topic, KhanAcademyController khanController, ViewPager mPager) {
+        this.khanController = khanController;
+        this.mPager = mPager;
+
+        getTopicsForTopic(topic);
+    }
 
     public void addTopic(Topic t) {
         topicList.add(t);
@@ -47,15 +62,26 @@ public class TopicGridFragment extends Fragment {
         topicList.addAll(list);
     }
 
+    private void getTopicsForTopic(Topic t) {
+        khanController.getTopicsByTopicName(t.getTopicId(), new DataCallback() {
+            @Override
+            public void receiveResults(List results) {
+                topicList = results;
+                initGridView((GridView) rootView.findViewById(R.id.gridView), mPager);
+
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.grid_fragment, container, false);
+        rootView = inflater.inflate(R.layout.grid_fragment, container, false);
 
-        GridView gridView = (GridView) v.findViewById(R.id.gridView);
+        gridView = (GridView) rootView.findViewById(R.id.gridView);
 
         initGridView(gridView, mPager);
 
-        return v;
+        return rootView;
     }
 
     private void initGridView(final GridView gridView, final ViewPager mPager) {
