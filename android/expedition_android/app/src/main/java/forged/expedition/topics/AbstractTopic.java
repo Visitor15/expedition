@@ -140,8 +140,8 @@ public abstract class AbstractTopic<T> implements Topic<T> {
     }
 
     @Override
-    public boolean isVideoTopic() {
-        return kind.equalsIgnoreCase("video");
+    public String getTopicKind() {
+        return this.kind;
     }
 
     @Override

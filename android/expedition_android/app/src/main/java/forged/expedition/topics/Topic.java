@@ -18,4 +18,6 @@ public interface Topic<T> extends JsonData<T> {
     public void setDisplayTitle(String title);
 
     public String getYouTubeId();
+
+    public String getTopicKind();
 }

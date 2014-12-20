@@ -94,7 +94,7 @@ public class TopicGridFragment extends Fragment {
 
                 final Topic currentTopic = (Topic) gridView.getAdapter().getItem(position);
 
-                if (currentTopic.isVideoTopic()) {
+                if (currentTopic.getTopicKind().equalsIgnoreCase("video")) {
                     khanController.getVideoTopicsForTopic(currentTopic.getTopicId(), new DataCallback<VideoTopic>() {
                         @Override
                         public void receiveResults(List<VideoTopic> results) {
