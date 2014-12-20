@@ -131,12 +131,12 @@ public class KhanAcademyController extends BaseController {
     }
 
     public void getNewAndNotewory(final DataCallback callback) {
-        sendRequestForAsyncResponse(ScienceTopic.SCIENCE_ID, new TypeToken<List<ScienceTopic>>() {
+        sendRequestForAsyncResponse(ScienceTopic.ID, new TypeToken<List<ScienceTopic>>() {
         }.getType(), callback);
     }
 
     public void getAllScienceTopics(final DataCallback callback) {
-        sendRequestForAsyncResponse(ScienceTopic.SCIENCE_ID, new TypeToken<List<ScienceTopic>>() {
+        sendRequestForAsyncResponse(ScienceTopic.ID, new TypeToken<List<ScienceTopic>>() {
         }.getType(), callback);
     }
 
