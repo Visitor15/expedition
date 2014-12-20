@@ -7,7 +7,7 @@ import forged.expedition.data.JsonData;
 /**
  * Created by visitor15 on 12/20/14.
  */
-public class NewAndNoteworthy extends AbstractTopic<NewAndNoteworthy> {
+public class NewAndNoteworthyTopic extends AbstractTopic<NewAndNoteworthyTopic> {
     public static final String ID = "new-and-noteworthy";
 
     @Override
@@ -31,7 +31,7 @@ public class NewAndNoteworthy extends AbstractTopic<NewAndNoteworthy> {
     }
 
     @Override
-    public NewAndNoteworthy fromJson(JsonData data) {
+    public NewAndNoteworthyTopic fromJson(JsonData data) {
         return null;
     }
 }
