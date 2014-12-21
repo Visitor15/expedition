@@ -30,6 +30,7 @@ import forged.expedition.topics.ComputingTopic;
 import forged.expedition.topics.EconomicsAndFinanceTopic;
 import forged.expedition.topics.GenericTopic;
 import forged.expedition.topics.MathTopic;
+import forged.expedition.topics.NewAndNoteworthyTopic;
 import forged.expedition.topics.PartnerContentTopic;
 import forged.expedition.topics.ScienceTopic;
 import forged.expedition.topics.TalksAndInterviewsTopic;
@@ -130,8 +131,8 @@ public class KhanAcademyController extends BaseController {
         });
     }
 
-    public void getNewAndNotewory(final DataCallback callback) {
-        sendRequestForAsyncResponse(ScienceTopic.ID, new TypeToken<List<ScienceTopic>>() {
+    public void getNewAndNoteworyTopics(final DataCallback callback) {
+        sendRequestForAsyncResponse(NewAndNoteworthyTopic.ID, new TypeToken<List<ScienceTopic>>() {
         }.getType(), callback);
     }
 
